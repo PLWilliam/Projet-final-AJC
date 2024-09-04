@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { collection, getDocs, deleteDoc, doc, addDoc  } from 'firebase/firestore';
 import { db } from '../firebase';
 import dbjson from '@/assets/db.js'
 
 // console.log(dbjson);
 const listProducts = dbjson.products;
+
+const lastIndex = ref()
 
 console.log(listProducts);
 
@@ -24,10 +26,10 @@ const form = ref({
 
 
 
+// Reset collection/db 
 const resetDB = async ()=>{
     try {
-
-        // Reset collection/db 
+        // delete everything from db
         const querySnapshot = await getDocs(collection(db, "products"));
         const batchPromises = querySnapshot.docs.map(documentSnapshot => 
             deleteDoc(doc(db, "products", documentSnapshot.id))
@@ -54,11 +56,12 @@ const resetDB = async ()=>{
     }
 }
 
+// Add data form into the db
 const addDB = async() =>{
-    console.log(form.value);
     try {
+        lastIndex.value++
         await addDoc(collection(db, "products"), {
-            "id": 'tt',
+            "id": lastIndex.value,
             "name": form.value.name,
             "overview": form.value.overview,
             "long_description": form.value.long_description,
@@ -70,12 +73,28 @@ const addDB = async() =>{
             "best_seller": form.value.best_seller,
         });
         console.log("Nouvelle entrée dans la db");
+        console.log(lastIndex.value);
         
     } catch (error) {
         console.log("erreur : "+error);
         
     }
 }
+
+// Find last "real" id from database and not id from firebase
+const findLastId = async()=>{
+    const querySnapshot = await getDocs(collection(db, "products"));
+    const maxID = querySnapshot.docs.reduce((a, b) => {
+        const id = b.data().id;
+        return Math.max(a, id);
+    }, -Infinity);
+    lastIndex.value = maxID
+    console.log(lastIndex.value);
+}
+
+onBeforeMount(()=>{
+    findLastId()
+})
 
 </script>
 

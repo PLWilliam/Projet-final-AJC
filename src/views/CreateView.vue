@@ -4,12 +4,7 @@ import { collection, getDocs, deleteDoc, doc, addDoc  } from 'firebase/firestore
 import { db } from '../firebase';
 import dbjson from '@/assets/db.js'
 
-// console.log(dbjson);
 const listProducts = dbjson.products;
-
-const lastIndex = ref()
-
-console.log(listProducts);
 
 const form = ref({
     "id": '',
@@ -38,19 +33,8 @@ const resetDB = async ()=>{
 
         // ReAdd every books from the default db.js
         listProducts.forEach(async(element) =>{
-            await addDoc(collection(db, "products"), {
-                "id": element.id,
-                "name": element.name,
-                "overview": element.overview,
-                "long_description": element.long_description,
-                "poster": element.poster,
-                "image_local": element.image_local,
-                "rating": element.rating,
-                "in_stock": element.in_stock,
-                "size": element.size,
-                "best_seller": element.best_seller,
-            });
-        });        
+            await addDoc(collection(db, "products"), element);
+        })        
     } catch (error) {
         console.log("erreur :" + error);
     }
@@ -59,25 +43,11 @@ const resetDB = async ()=>{
 // Add data form into the db
 const addDB = async() =>{
     try {
-        lastIndex.value++
-        await addDoc(collection(db, "products"), {
-            "id": lastIndex.value,
-            "name": form.value.name,
-            "overview": form.value.overview,
-            "long_description": form.value.long_description,
-            "poster": form.value.poster,
-            "image_local": form.value.image_local,
-            "rating": form.value.rating,
-            "in_stock": form.value.in_stock,
-            "size": form.value.size,
-            "best_seller": form.value.best_seller,
-        });
+        form.value.id++
+        await addDoc(collection(db, "products"), form.value);
         console.log("Nouvelle entrée dans la db");
-        console.log(lastIndex.value);
-        
     } catch (error) {
         console.log("erreur : "+error);
-        
     }
 }
 
@@ -88,8 +58,7 @@ const findLastId = async()=>{
         const id = b.data().id;
         return Math.max(a, id);
     }, -Infinity);
-    lastIndex.value = maxID
-    console.log(lastIndex.value);
+    form.value.id = maxID
 }
 
 onBeforeMount(()=>{

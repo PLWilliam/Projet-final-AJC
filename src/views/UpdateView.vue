@@ -5,7 +5,7 @@ import { collection, getDocs, deleteDoc, doc, addDoc,query,where,updateDoc  } fr
 import { db } from '../firebase';
 
 const route = useRoute();
-const id = Number(route.params.id)
+const id    = Number(route.params.id)
 
 const firebaseID = ref();
 
@@ -24,22 +24,11 @@ const updateBook = async()=>{
 }
 
 onBeforeMount(async()=>{    
-    const q = query(collection(db, 'products'), where('id', '==', id));
-    const queryDocs = await getDocs(q)
+    const q          = query(collection(db, 'products'), where('id', '==', id));
+    const queryDocs  = await getDocs(q)
+    const data       = queryDocs.docs.pop().data()
     firebaseID.value = queryDocs.docs.pop().id
-    const data = queryDocs.docs.pop().data()
-    form.value = {
-        "id": data.id,
-        "name": data.name,
-        "overview":data.overview ,
-        "long_description": data.long_description,
-        "poster": data.poster,
-        "image_local": data.image_local,
-        "rating": data.rating,
-        "in_stock": data.in_stock,
-        "size": data.size,
-        "best_seller": data.best_seller,
-    }
+    form.value       = data
 })
 
 </script>

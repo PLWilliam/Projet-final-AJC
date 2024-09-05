@@ -4,39 +4,20 @@ import { RouterLink, RouterView } from 'vue-router'
 import { collection, query, where, getDocs ,deleteDoc , doc , addDoc} from 'firebase/firestore';
 import { db } from '../firebase';
 
+import CardBook from '@/components/CardBook.vue';
+
 const products = ref([]);
 
-//Delete locally and on db chosen book
+//Delete locally
 const deleteBook = async(id)=>{
-
-  await deleteDoc(doc(db, "products", id))
-
+  console.log(id);
+  
   let index = products.value.findIndex((e)=> e.firebaseID == id)
   products.value.splice(index, 1);
 
 }
 
-//Add or delete book from featured_products if it's in or not
-const updateFeatured = async(id)=>{  
-  
-  try {
-    let find = products.value.find((e)=> e.id == id)
-    if (!find.featured_products) {
-      delete find.firebaseID;
-      delete find.featured_products;
-      await addDoc(collection(db, "featured_products"),find);
-    }
-    else{
-      const q         = query(collection(db, 'featured_products'), where('id', '==', id));
-      const queryDocs = await getDocs(q)
-      const docs      = queryDocs.docs.pop()
-      await deleteDoc(doc(db, "featured_products", docs.id));
-    }
-    find.featured_products = !find.featured_products
-  } catch (error) {
-    console.log("erreur : "+error);
-  }
-}
+
 
 onMounted(async () => {
 
@@ -60,20 +41,29 @@ onMounted(async () => {
 
 <template>
   <div>
-    <ul>
-      <li v-for="product in products" :key="product.id">
-        {{ product.name }}
-        {{ product.id }}
-        <RouterLink :to="{
-          name : 'update',
-          params: {
-            id: product.id
-          }
-        }">Modifier </RouterLink>
-        <button @click="deleteBook(product.firebaseID)">Supprimer</button>
-        <button @click="updateFeatured(product.id)">featured</button>
-        {{ product.featured_products }}
+    <ul id="listCard">
+      <li v-for="(product,index) in products" :key="product.id">
+        <CardBook :product="product" :index="index" @deleteBook="deleteBook"/>
+
       </li>
     </ul>
   </div>
 </template>
+
+<style scoped>
+
+#listCard{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+  padding: 0;
+}
+
+#listCard li{
+  width: 90%;
+  list-style: none;
+  margin: 0;
+}
+
+</style>

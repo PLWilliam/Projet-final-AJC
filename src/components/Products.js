@@ -1,19 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../firebase';
+import firebase from 'firebase/compat/app';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    fetch('/products')
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, [searchQuery]);
+    const fetchProducts = async () => {
+      const querySnapshot = await getDocs(query(collection(db, 'products')));
+      const productsMap = querySnapshot.docs.map(doc => ({ firebaseID: doc.id,...doc.data()}));
+      setProducts(productsMap);
+    };
+    fetchProducts();
+  }, []);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
+
+  const filteredProducts = products.filter(product => 
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div>
@@ -24,7 +34,7 @@ const Products = () => {
         placeholder="Search for eBooks"
       />
       <div>
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <div key={product.id}>
             <Link to={`/products/${product.id}`}>
               <h3>{product.name}</h3>

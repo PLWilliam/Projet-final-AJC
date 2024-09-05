@@ -13,9 +13,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       const querySnapshot = await getDocs(query(collection(db, 'featured_products')));
-
       const featuredProducts = querySnapshot.docs.map(doc => ({...doc.data()}));
-
       setFeaturedProducts(featuredProducts);
     };
 

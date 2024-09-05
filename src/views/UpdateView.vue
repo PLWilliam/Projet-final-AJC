@@ -14,8 +14,19 @@ const firebaseID = ref();
 const form = ref({})
 
 const updateBook = async()=>{
+    console.log(form.value);
+    
     try {
         await updateDoc(doc(db, 'products', firebaseID.value), form.value);
+
+        const q = query(collection(db, 'featured_products'), where('id', '==', form.value.id));
+        
+        const queryDocs = await getDocs(q)        
+        
+        if (queryDocs.docs.length > 0) {
+            await updateDoc(doc(db, 'featured_products', queryDocs.docs.pop().id), form.value);
+        }
+
         console.log("update");
         router.push({ name: 'read' });
     } catch (error) {

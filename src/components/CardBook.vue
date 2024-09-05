@@ -9,37 +9,48 @@ const props = defineProps(['product','index'])
 const emit = defineEmits(['deleteBook'])
 const product = props.product
 
-//Delete locally and on db chosen book
-const deleteBook = async(id)=>{
+//Delete from db chosen book
+const deleteBook = async(id,firebaseID)=>{
 
-    await deleteDoc(doc(db, "products", id))
-
-    console.log(id);
+    console.log(firebaseID);
     
-    emit('deleteBook',id)
-    // product.splice(index, 1);
 
+    try {
+        const q = await query(collection(db, 'featured_products'), where('id', '==', id));
+        const queryDocs = await getDocs(q)  
+
+        if (queryDocs.docs.length > 0) {
+            const docID = queryDocs.docs[0].id;
+            await deleteDoc(doc(db, "featured_products", docID))
+        }
+
+        await deleteDoc(doc(db, "products", firebaseID))
+        emit('deleteBook',firebaseID)
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 //Add or delete book from featured_products if it's in or not
 const updateFeatured = async(id)=>{  
 
-try {
-  if (!product.featured_products) {
-    delete product.firebaseID;
-    delete product.featured_products;
-    await addDoc(collection(db, "featured_products"),product);
-  }
-  else{
-    const q         = query(collection(db, 'featured_products'), where('id', '==', id));
-    const queryDocs = await getDocs(q)
-    const docs      = queryDocs.docs.pop()
-    await deleteDoc(doc(db, "featured_products", docs.id));
-  }
-  product.featured_products = !product.featured_products
-} catch (error) {
-  console.log("erreur : "+error);
-}
+    try {
+        const copyProduct = { ...product }
+        if (!product.featured_products) {
+            delete copyProduct.firebaseID;
+            delete copyProduct.featured_products;
+            await addDoc(collection(db, "featured_products"),copyProduct);
+        }
+        else{
+            const q         = query(collection(db, 'featured_products'), where('id', '==', id));
+            const queryDocs = await getDocs(q)
+            const docs      = queryDocs.docs.pop()
+            await deleteDoc(doc(db, "featured_products", docs.id));
+        }
+        product.featured_products = !product.featured_products
+    } catch (error) {
+        console.log("erreur : "+error);
+    }
 }
 
 </script>
@@ -47,8 +58,20 @@ try {
 <template>
     <div class="card">
         <div class="cardText">
-            {{ product.name }}
-            {{ product.id }}
+            <img :src="product.poster" :alt="'image : '+product.name">
+            <div class="cardInfo">
+                <h3>{{ product.name }}</h3>
+                <span>{{ product.overview }}</span>
+                <div class="cardInfoDuo">
+                    <span>Note : {{ product.rating }} / 5</span>
+                    <span>Best seller : {{ product.best_seller ? 'Vrai' : 'Faux' }}</span>
+                </div>
+                <div class="cardInfoDuo">
+                    <span>En stock : {{ product.in_stock ? 'Vrai' : 'Faux' }}</span>
+                    <span>Taille : {{ product.size }} MB</span>
+                </div>
+                <span>Prix : {{ product.price }} $</span>
+            </div>
         </div>
         <div class="cardBtn">
             <div class="splitBtn">
@@ -59,17 +82,18 @@ try {
                         }
                     }"
                     class="btn"
+                    aria-label="Envoie sur la page de modification de ce livre"
                 >
                     <font-awesome-icon :icon="['fas', 'pen-to-square']" class="icon"/> 
                 </RouterLink>
             </div>
             <div class="splitBtn">
-                <button @click="deleteBook(product.firebaseID)" class="btn">
+                <button @click="deleteBook(product.id,product.firebaseID)" class="btn" aria-label="Suppression du livre">
                     <font-awesome-icon icon="fa-solid fa-trash" class="icon"/>
                 </button>
             </div>
             <div class="splitBtn">
-                <button @click="updateFeatured(product.id)" class="btn">
+                <button @click="updateFeatured(product.id)" class="btn" :aria-label="product.featured_products ? 'Retire le livre de la liste vedette' : 'Ajout du livre dans la liste vedette' ">
                     <div v-if="product.featured_products" class="btn" style="border: none;">
                         <font-awesome-icon icon="fa-solid fa-star" class="icon"/>
                     </div>
@@ -87,25 +111,60 @@ try {
 
 .card{
     background-color: aquamarine;
-    max-width: 100%;
-    padding: 1em;
-    border-radius: 50px;
-    display: flex;
+    /* max-width: 100%; */
+    /* height: 10em; */
+    /* padding: 1em; */
+    border-radius: 25px;
+    /* display: flex; */
 }
 
 .cardText{
-    width: 90%;
+    /* display: flex; */
+    width: 100%;
+    height: 90%;
+}
+
+.cardText img{
+    border-radius: 25px 25px 0 0;
+    width: 100%;
+    height: 40%;
+}
+
+.cardInfo{
+    height: 60%;
+    padding: 0 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardInfoDuo{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cardInfoDuo span{
+    margin: 0.5em 0;
 }
 
 .cardBtn{
-    width: 10%;
+    border-top: 1px solid black;
+    box-sizing: border-box;
+    width: 100%;
+    height: 10%;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .splitBtn{
-    width: 33%;
+    height: 5em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn{

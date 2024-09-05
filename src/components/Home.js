@@ -3,20 +3,25 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 import Header from './Header';
 import Accordion from './Accordion';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../firebase';
 
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
 
   useEffect(() => {
-    fetch('/featuredProducts')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('Données récupérées :', data); 
-        setFeaturedProducts(data.featured_products); 
-      })
-      .catch((error) => console.error('Erreur de connexion à l\'API :', error));
+    const fetchProducts = async () => {
+      const querySnapshot = await getDocs(query(collection(db, 'featured_products')));
+
+      const featuredProducts = querySnapshot.docs.map(doc => ({...doc.data()}));
+
+      setFeaturedProducts(featuredProducts);
+    };
+
+    fetchProducts();
   }, []);
+
   return (
     <Header/>, 
     <div className="home-container">
@@ -41,24 +46,24 @@ const Home = () => {
       <section className="featured-section">
         <h2>Livres électroniques en vedette</h2>
         <div className="featured-products">
-        {featuredProducts.length > 0 ? (
-  featuredProducts.map((product) => (
-    <div key={product.id} className="featured-product">
-      {product.best_seller && <span className="best-seller-badge">Meilleur vendeur</span>}
-      <Link to={`/products/${product.id}`}>
-        <img src={product.poster} alt={product.name} className="product-image" />
-        <h3>{product.name}</h3>
-      </Link>
-      <p>{product.overview}</p>
-      <p>Price: {product.price} €</p>
-      <p>Rating: {product.rating} / 5</p>
-      <button className="add-to-cart">Ajouter au panier +</button>
-    </div>
-  ))
-) : (
-  <p>Chargement des produits en vedette...</p>
-)}
-        </div>
+          {featuredProducts.length > 0 ? (
+            featuredProducts.map((product) => (
+            <div key={product.id} className="featured-product">
+              {product.best_seller && <span className="best-seller-badge">Meilleur vendeur</span>}
+              <Link to={`/products/${product.id}`}>
+                <img src={product.poster} alt={product.name} className="product-image" />
+                <h3>{product.name}</h3>
+              </Link>
+              <p>{product.overview}</p>
+              <p>Price: {product.price} €</p>
+              <p>Rating: {product.rating} / 5</p>
+              <button className="add-to-cart">Ajouter au panier +</button>
+            </div>
+          ))
+        ) : (
+          <p>Chargement des produits en vedette...</p>
+        )}
+      </div>
       </section>
 
       {/* Testimonials section */}

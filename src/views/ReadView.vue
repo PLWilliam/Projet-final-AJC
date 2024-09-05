@@ -16,11 +16,14 @@ const deleteBook = async(id)=>{
 
 }
 
+//Add or delete book from featured_products if it's in or not
 const updateFeatured = async(id)=>{  
   
   try {
     let find = products.value.find((e)=> e.id == id)
-    if (!find.featured_product) {
+    if (!find.featured_products) {
+      delete find.firebaseID;
+      delete find.featured_products;
       await addDoc(collection(db, "featured_products"),find);
     }
     else{
@@ -29,25 +32,27 @@ const updateFeatured = async(id)=>{
       const docs      = queryDocs.docs.pop()
       await deleteDoc(doc(db, "featured_products", docs.id));
     }
-    find.featured_product = !find.featured_product
+    find.featured_products = !find.featured_products
   } catch (error) {
     console.log("erreur : "+error);
   }
 }
 
 onMounted(async () => {
+
+  //Create products array with [id from firebase,data from products table,boolean if it's also in featured_products table]
   const querySnapshot  = await getDocs(collection(db, "products"));  
   const querySnapshot2 = await getDocs(collection(db, "featured_products"));  
 
   products.value = querySnapshot.docs.map(doc => {
     const productId      = doc.data().id; 
-    let featured_product = false;
+    let featured_products = false;
     
     if (querySnapshot2.docs.some(featuredDoc => featuredDoc.data().id === productId)) {
-      featured_product = true;
+      featured_products = true;
     }
     
-    return { firebaseID: doc.id, ...doc.data(), featured_product };
+    return { firebaseID: doc.id, ...doc.data(), featured_products };
   });
 });
 
@@ -67,7 +72,7 @@ onMounted(async () => {
         }">Modifier </RouterLink>
         <button @click="deleteBook(product.firebaseID)">Supprimer</button>
         <button @click="updateFeatured(product.id)">featured</button>
-        {{ product.featured_product }}
+        {{ product.featured_products }}
       </li>
     </ul>
   </div>

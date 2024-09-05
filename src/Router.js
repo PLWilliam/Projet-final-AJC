@@ -16,7 +16,7 @@ const Router = () => {
       <Route path="/products/:id" element={<ProductDetail />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="*" element={<Navigate to="/" />} />
+     
     </Routes>
   );
 };

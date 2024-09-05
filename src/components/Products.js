@@ -6,7 +6,7 @@ const Products = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    fetch(`http://localhost:5000/products?q=${searchQuery}`)
+    fetch('/products')
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, [searchQuery]);
@@ -27,10 +27,16 @@ const Products = () => {
         {products.map((product) => (
           <div key={product.id}>
             <Link to={`/products/${product.id}`}>
-              <h3>{product.title}</h3>
+              <h3>{product.name}</h3>
             </Link>
-            <p>{product.description}</p>
-            <p>Price: ${product.price}</p>
+            <img src={product.poster} alt={product.name} />
+            <p>{product.overview}</p>
+            <p>Price: {product.price} €</p>
+            {product.rating ? (
+              <p>Rating: {product.rating} / 5</p>
+            ) : (
+              <p>No rating available</p>
+            )}
           </div>
         ))}
       </div>

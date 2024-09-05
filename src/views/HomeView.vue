@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { signInWithEmailAndPassword,signOut } from 'firebase/auth';
+import { signInWithEmailAndPassword,signOut,onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useRoute,useRouter } from "vue-router";
 
@@ -19,12 +19,16 @@ const login = async () => {
   }
 };
 
-//faire fonction si co router to read
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    router.push({ name: 'read' });
+  }
+});
 
 </script>
 
 <template>
-  <div id="loginContainer">
+  <div id="containerLogin">
     <div class="loginBox">
       <h1>Connexion</h1>
       <div class="labelInput">
@@ -42,7 +46,7 @@ const login = async () => {
 
 <style scoped>
 
-#loginContainer{
+#containerLogin{
   height: 80vh;
   display: flex;
   flex-direction: column;

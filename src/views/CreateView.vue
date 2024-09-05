@@ -78,6 +78,10 @@ onBeforeMount(()=>{
 
 <button @click="resetDB">reset database</button>
 
+<div class="containerBtn">
+    <RouterLink to="/read" class="centralBtn">Retour</RouterLink>
+</div>
+
 <FormBook :form="form" @emitForm="addDB"/>
     
     

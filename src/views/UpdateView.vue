@@ -47,6 +47,10 @@ onBeforeMount(async()=>{
 
 <template>
 
+<div class="containerBtn">
+    <RouterLink to="/read" class="centralBtn">Retour</RouterLink>
+</div>
+
 <FormBook :form="form" @emitForm="updateBook"/>
     
     

@@ -8,6 +8,7 @@ import CardBook from '@/components/CardBook.vue';
 
 const products = ref([]);
 
+
 //Delete locally
 const deleteBook = async(id)=>{
   console.log(id);
@@ -15,6 +16,18 @@ const deleteBook = async(id)=>{
   let index = products.value.findIndex((e)=> e.firebaseID == id)
   products.value.splice(index, 1);
 
+
+}
+
+const sortProducts = ()=>{
+  products.value = products.value.sort((a,b)=>{
+    if(a.featured_products < b.featured_products){
+      return 1;
+    }
+    else{
+      return -1;
+    }
+  })
 }
 
 
@@ -35,12 +48,20 @@ onMounted(async () => {
     
     return { firebaseID: doc.id, ...doc.data(), featured_products };
   });
+
+  sortProducts()
+  
+
 });
 
 </script>
 
 <template>
   <div>
+    <div class="containerBtn">
+      <RouterLink to="/create" class="centralBtn">Ajouter un eBook</RouterLink>
+    </div>
+    
     <ul id="listCard">
       <li v-for="(product,index) in products" :key="product.id">
         <CardBook :product="product" :index="index" @deleteBook="deleteBook"/>
@@ -50,6 +71,13 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+
+#containerRead{
+  width: 100%;
+  height: 100%;
+  background-color: khaki;
+  position: relative;
+}
 
 #listCard{
   padding: 0;
@@ -64,14 +92,12 @@ onMounted(async () => {
 
 #listCard li{
   align-self: stretch;
+  justify-items: stretch;
   width: 20%;
   display: flex;
-
   list-style: none;
   margin: 0;
 }
-
-
 
 
 </style>

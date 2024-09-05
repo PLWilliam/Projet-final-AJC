@@ -1,8 +1,6 @@
 <script setup>
 import { collection, query, where, getDocs ,deleteDoc , doc , addDoc} from 'firebase/firestore';
 import { db } from '../firebase';
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import { fas, far, fal, fass, fasds } from '@awesome.me/kit-KIT_CODE/icons'
 
 const props = defineProps(['product','index'])
 
@@ -12,23 +10,24 @@ const product = props.product
 //Delete from db chosen book
 const deleteBook = async(id,firebaseID)=>{
 
-    console.log(firebaseID);
-    
+    const text = "Etes vous sure de vouloir supprimer ce livre ?";
+    // if (confirm(text)==true) {
+        console.log(firebaseID);
+        try {
+            const q = await query(collection(db, 'featured_products'), where('id', '==', id));
+            const queryDocs = await getDocs(q)  
 
-    try {
-        const q = await query(collection(db, 'featured_products'), where('id', '==', id));
-        const queryDocs = await getDocs(q)  
+            if (queryDocs.docs.length > 0) {
+                const docID = queryDocs.docs[0].id;
+                await deleteDoc(doc(db, "featured_products", docID))
+            }
 
-        if (queryDocs.docs.length > 0) {
-            const docID = queryDocs.docs[0].id;
-            await deleteDoc(doc(db, "featured_products", docID))
-        }
-
-        await deleteDoc(doc(db, "products", firebaseID))
-        emit('deleteBook',firebaseID)
-    } catch (error) {
-        console.log(error);
-    }
+            await deleteDoc(doc(db, "products", firebaseID))
+            emit('deleteBook',firebaseID)
+        } catch (error) {
+            console.log(error);
+        }  
+    // }
 }
 
 //Add or delete book from featured_products if it's in or not
@@ -62,14 +61,10 @@ const updateFeatured = async(id)=>{
             <div class="cardInfo">
                 <h3>{{ product.name }}</h3>
                 <span>{{ product.overview }}</span>
-                <div class="cardInfoDuo">
-                    <span>Note : {{ product.rating }} / 5</span>
-                    <span>Best seller : {{ product.best_seller ? 'Vrai' : 'Faux' }}</span>
-                </div>
-                <div class="cardInfoDuo">
-                    <span>En stock : {{ product.in_stock ? 'Vrai' : 'Faux' }}</span>
-                    <span>Taille : {{ product.size }} MB</span>
-                </div>
+                <span>Note : {{ product.rating }} / 5</span>
+                <span>Best seller : {{ product.best_seller ? 'Oui' : 'Non' }}</span>
+                <span>En stock : {{ product.in_stock ? 'Oui' : 'Non' }}</span>
+                <span>Taille : {{ product.size }} MB</span>
                 <span>Prix : {{ product.price }} $</span>
             </div>
         </div>
@@ -102,7 +97,6 @@ const updateFeatured = async(id)=>{
                     </div>
                 </button>
             </div>
-            <!-- {{ product.featured_products }} -->
         </div>
     </div>
 </template>
@@ -111,17 +105,13 @@ const updateFeatured = async(id)=>{
 
 .card{
     background-color: aquamarine;
-    /* max-width: 100%; */
-    /* height: 10em; */
-    /* padding: 1em; */
     border-radius: 25px;
-    /* display: flex; */
+    width: 100%;
 }
 
 .cardText{
-    /* display: flex; */
     width: 100%;
-    height: 90%;
+    height: 85%;
 }
 
 .cardText img{
@@ -137,22 +127,15 @@ const updateFeatured = async(id)=>{
     flex-direction: column;
 }
 
-.cardInfoDuo{
-    width: 50%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.cardInfoDuo span{
-    margin: 0.5em 0;
+span{
+    margin: 0.1em 0;
 }
 
 .cardBtn{
     border-top: 1px solid black;
     box-sizing: border-box;
     width: 100%;
-    height: 10%;
+    height: 15%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;

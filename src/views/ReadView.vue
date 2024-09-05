@@ -41,10 +41,20 @@ onMounted(async () => {
 
 <template>
   <div>
+    <div class="labelContainer">
+      <div class="labelGroup">
+        <div class="label">
+          Livre :
+        </div>
+        <div class="labelBtn">
+          Modifier | Supprimer | Vedette 
+        </div>
+      </div>
+      <hr>
+    </div>
     <ul id="listCard">
       <li v-for="(product,index) in products" :key="product.id">
         <CardBook :product="product" :index="index" @deleteBook="deleteBook"/>
-
       </li>
     </ul>
   </div>
@@ -65,5 +75,25 @@ onMounted(async () => {
   list-style: none;
   margin: 0;
 }
+
+.labelContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
+.labelGroup{
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+
+hr{
+  width: 90%;
+  margin: 0 1em;
+}
+
+
 
 </style>

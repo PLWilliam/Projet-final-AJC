@@ -1,0 +1,72 @@
+<script setup>
+import { ref,onMounted,watch } from 'vue';
+
+const emit = defineEmits(['emitForm'])
+const props = defineProps({
+    form: {
+        type: Object,
+    },
+})
+
+const form = ref({})
+
+const emitForm=()=>{
+    emit('emitForm',form.value)
+}
+
+onMounted(()=>{
+    form.value = props.form
+})
+
+watch(()=>props.form, (newValue)=>{
+    form.value = newValue
+})
+
+
+</script>
+
+<template>
+
+<div class="form"> 
+    <label for="name">name</label>
+    <input type="text" name="name" v-model="form.name">
+    
+    <label for="overview">overview</label>
+    <input type="text" name="overview" v-model="form.overview">
+    
+    <label for="long_description">long_description</label>
+    <input type="text" name="long_description" v-model="form.long_description">
+    
+    <label for="price">price</label>
+    <input type="text" name="price" v-model="form.price">
+    
+    <label for="poster">poster</label>
+    <input type="text" name="poster" v-model="form.poster">
+    
+    <label for="image_local">image_local</label>
+    <input type="text" name="image_local" v-model="form.image_local">
+    
+    <label for="rating">rating</label>
+    <input type="text" name="rating" v-model="form.rating">
+    
+    <label for="in_stock">in_stock</label>
+    <input type="checkbox" name="in_stock" v-model="form.in_stock">
+    
+    <label for="size">size</label>
+    <input type="text" name="size" v-model="form.size">
+    
+    <label for="best_seller">best_seller</label>
+    <input type="checkbox" name="best_seller" v-model="form.best_seller">
+
+    <button @click="emitForm">Envoyer</button>
+</div>
+
+</template>
+
+<style scoped>
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+</style>

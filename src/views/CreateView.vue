@@ -1,8 +1,12 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
+import { useRoute,useRouter } from "vue-router";
 import { collection, getDocs, deleteDoc, doc, addDoc  } from 'firebase/firestore';
 import { db } from '../firebase';
 import dbjson from '@/assets/db.js'
+import FormBook from '@/components/FormBook.vue';
+
+const router = useRouter()
 
 const listProducts = dbjson.products;
 
@@ -19,6 +23,7 @@ const form = ref({
     "best_seller": false,
 })
 
+const lastID = ref()
 
 // Reset collection/db 
 const resetDB = async ()=>{
@@ -40,11 +45,13 @@ const resetDB = async ()=>{
 }
 
 // Add data form into the db
-const addDB = async() =>{
+const addDB = async(form) =>{
     try {
-        form.value.id++
-        await addDoc(collection(db, "products"), form.value);
+        lastID.value++
+        form.id = lastID.value
+        await addDoc(collection(db, "products"), form);
         console.log("Nouvelle entrée dans la db");
+        router.push({ name: 'read' });
     } catch (error) {
         console.log("erreur : "+error);
     }
@@ -57,7 +64,7 @@ const findLastId = async()=>{
         const id = b.data().id;
         return Math.max(a, id);
     }, -Infinity);
-    form.value.id = maxID
+    lastID.value = maxID
 }
 
 onBeforeMount(()=>{
@@ -71,48 +78,12 @@ onBeforeMount(()=>{
 
 <button @click="resetDB">reset database</button>
 
-<div class="form">    
-    <label for="name">name</label>
-    <input type="text" name="name" v-model="form.name">
-    
-    <label for="overview">overview</label>
-    <input type="text" name="overview" v-model="form.overview">
-    
-    <label for="long_description">long_description</label>
-    <input type="text" name="long_description" v-model="form.long_description">
-    
-    <label for="price">price</label>
-    <input type="text" name="price" v-model="form.price">
-    
-    <label for="poster">poster</label>
-    <input type="text" name="poster" v-model="form.poster">
-    
-    <label for="image_local">image_local</label>
-    <input type="text" name="image_local" v-model="form.image_local">
-    
-    <label for="rating">rating</label>
-    <input type="text" name="rating" v-model="form.rating">
-    
-    <label for="in_stock">in_stock</label>
-    <input type="checkbox" name="in_stock" v-model="form.in_stock">
-    
-    <label for="size">size</label>
-    <input type="text" name="size" v-model="form.size">
-    
-    <label for="best_seller">best_seller</label>
-    <input type="checkbox" name="best_seller" v-model="form.best_seller">
-
-    <button @click="addDB">Envoyer</button>
-</div>
+<FormBook :form="form" @emitForm="addDB"/>
     
     
 </template>
 
 <style scoped>
 
-.form{
-    display: flex;
-    flex-direction: column;
-}
 
 </style>

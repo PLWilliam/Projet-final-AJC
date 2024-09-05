@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import Header from './Header';
+import Accordion from './Accordion';
+
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -15,6 +18,7 @@ const Home = () => {
       .catch((error) => console.error('Erreur de connexion à l\'API :', error));
   }, []);
   return (
+    <Header/>, 
     <div className="home-container">
       {/* Hero section */}
       <header className="hero">
@@ -73,7 +77,7 @@ const Home = () => {
       </section>
 
       {/* FAQ section */}
-      <section className="faq-section">
+      {/* <section className="faq-section">
         <h2>Une question en tête ?</h2>
         <div className="faq">
           <div className="faq-item">Pourquoi devrais-je utiliser CodeBook ?</div>
@@ -81,7 +85,9 @@ const Home = () => {
           <div className="faq-item">Offrez-vous des remboursements ?</div>
           <div className="faq-item">Supportez-vous les paiements internationaux ?</div>
         </div>
-      </section>
+      </section> */}
+    <Accordion/>
+
 
       {/* Footer */}
       <footer>

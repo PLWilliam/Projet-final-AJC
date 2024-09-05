@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 import { CartContext } from './CartContext';
 
 const ProductDetail = () => {
-  const { id } = useParams();
+  const { id } = useParams(); 
   const [product, setProduct] = useState(null);
   const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/products/${id}`)
+    
+    fetch(`/products/${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data));
   }, [id]);
@@ -17,9 +18,14 @@ const ProductDetail = () => {
 
   return (
     <div>
-      <h2>{product.title}</h2>
-      <p>{product.description}</p>
-      <p>Price: ${product.price}</p>
+      <h2>{product.name}</h2>
+      <img src={product.poster} alt={product.name} style={{ width: '200px', height: 'auto' }} />
+      <p>{product.long_description}</p>
+      <p>Price: {product.price} €</p>
+      <p>Rating: {product.rating} / 5</p>
+      <p>In Stock: {product.in_stock ? 'Yes' : 'No'}</p>
+      <p>Size: {product.size} MB</p>
+      <p>Best Seller: {product.best_seller ? 'Yes' : 'No'}</p>
       <button onClick={() => addToCart(product)}>Add to Cart</button>
     </div>
   );

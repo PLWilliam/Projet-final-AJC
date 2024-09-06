@@ -29,7 +29,6 @@ const ProductDetail = () => {
   }, [id]);
 
   const addCart = ()=>{
-
     if (product.in_stock) {
       if(!cart.includes(product)){
         addToCart(product)

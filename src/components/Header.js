@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
+import { CartContext } from './CartContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
+  const { cart } = useContext(CartContext);
 
   const handleSearchToggle = () => {
     setShowSearch(!showSearch);
@@ -14,25 +17,27 @@ const Header = () => {
     navigate('/cart');
   };
 
+
+
   return (
     <header className="header">
       <div className="logo">
-        <img src="/path/to/logo.png" alt="Logo" />
+        <img src={require('../assets/Codebook.png')} alt="Logo" />
         <span>Livre de codes</span>
       </div>
       <nav className="nav-icons">
         <button className="icon-btn" onClick={() => alert('Settings clicked')}>
-          <i className="fa fa-cog"></i>
+          <FontAwesomeIcon icon="fa-solid fa-gear" />
         </button>
         <button className="icon-btn" onClick={handleSearchToggle}>
-          <i className="fa fa-search"></i>
+          <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
         </button>
         <button className="icon-btn" onClick={handleCartClick}>
-          <i className="fa fa-shopping-cart"></i>
-          <span className="cart-badge">0</span>
+          <span className="cart-badge">{cart.length}</span>
+          <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
         </button>
         <button className="icon-btn" onClick={() => alert('Profile clicked')}>
-          <i className="fa fa-user"></i>
+          <FontAwesomeIcon icon="fa-solid fa-user" />
         </button>
       </nav>
       {showSearch && (

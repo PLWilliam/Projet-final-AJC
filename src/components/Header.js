@@ -64,8 +64,10 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo">
-        <img src={require('../assets/Codebook.png')} alt="Logo" />
-        <span>Livre de codes</span>
+        <Link to="/products">
+          <img src={require('../assets/Codebook.png')} alt="Logo" />
+          <span>Livre de codes</span>
+        </Link>
       </div>
       <nav className="nav-icons">
         <button className="icon-btn" onClick={() => alert('Settings clicked')}>

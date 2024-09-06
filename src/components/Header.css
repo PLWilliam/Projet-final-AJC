@@ -9,14 +9,21 @@
     height: 5vh;
   }
   
-  .logo {
+  .logo a {
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-decoration: none;
   }
   
   .logo img {
-    height: 30px;
-    margin-right: 10px;
+    height: 3em;
+    /* margin-right: 10px; */
+  }
+
+  .logo span{
+    color: #fff;
+    font-size: 2em;
   }
   
   .nav-icons {

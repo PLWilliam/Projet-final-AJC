@@ -5,6 +5,8 @@
     padding: 10px 20px;
     background-color: #333;
     color: #fff;
+    position: relative;
+    height: 5vh;
   }
   
   .logo {
@@ -56,5 +58,37 @@
     border: 1px solid #ddd;
     padding: 5px;
     border-radius: 4px;
+  }
+
+  .dropDown{
+    position: absolute;
+    background-color: grey;
+    right:10px;
+    top: calc(5vh + 10px);
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .dropDown ul{
+    padding: 0;
+    width: 10em;
+  }
+
+  .dropDown li{
+    list-style: none;
+    width: 100%;
+    
+    
+  }
+
+  .dropDown button{
+    padding: 1em 0;
+    width: 100%;
+    background-color: none;
+    border: none;
+  }
+
+  .dropDown button:hover{
+    background-color: darkgray;
   }
   

@@ -24,7 +24,7 @@ const Home = () => {
   return (
     <Header/>, 
     <div className="home-container">
-      {/* Hero section */}
+    
       <header className="hero">
         <div className="hero-content">
           <h1>La librairie électronique ultime</h1>
@@ -41,7 +41,7 @@ const Home = () => {
         </div>
       </header>
 
-      {/* Featured products section */}
+ 
       <section className="featured-section">
         <h2>Livres électroniques en vedette</h2>
         <div className="featured-products">
@@ -58,7 +58,7 @@ const Home = () => {
           </Link>
       </section>
 
-      {/* Testimonials section */}
+     
       <section className="testimonials-section">
         <h2>Étudiant À propos de CodeBook</h2>
         <div className="testimonials">
@@ -73,20 +73,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* FAQ section */}
-      {/* <section className="faq-section">
-        <h2>Une question en tête ?</h2>
-        <div className="faq">
-          <div className="faq-item">Pourquoi devrais-je utiliser CodeBook ?</div>
-          <div className="faq-item">Puis-je accéder à mon eBook sur mobile ?</div>
-          <div className="faq-item">Offrez-vous des remboursements ?</div>
-          <div className="faq-item">Supportez-vous les paiements internationaux ?</div>
-        </div>
-      </section> */}
+      
     <Accordion/>
 
 
-      {/* Footer */}
+   
       <footer>
         <p>&copy; 2030 CodeBook. Tous droits réservés.</p>
       </footer>

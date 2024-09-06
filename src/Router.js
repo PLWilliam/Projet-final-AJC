@@ -7,6 +7,8 @@ import Products from './components/Products';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import FeaturedProducts  from './components/FeaturedProducts';
+
 
 const Router = () => {
   return (
@@ -18,6 +20,7 @@ const Router = () => {
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/featured_products" element={<FeaturedProducts />} />
      
     </Routes>
   );

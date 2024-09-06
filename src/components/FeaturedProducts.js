@@ -5,6 +5,8 @@ import { db } from '../firebase';
 
 const FeaturedProducts = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
     useEffect(() => {
       const fetchProducts = async () => {
@@ -29,9 +31,12 @@ const FeaturedProducts = () => {
           <ul>
             {featuredProducts.map(product => (
               <li key={product.id}>
-                <h2>{product.title}</h2>
-                <p>{product.description}</p>
-                <p>Price: ${product.price}</p>
+                <Link to={`/products/${product.id}`}>
+                <h2>{product.name}</h2>
+                </Link>
+                <img src={product.poster} alt={product.name} />
+                <p>{product.overview}</p>
+                <p>Price:{product.price}€ </p>
               </li>
             ))}
           </ul>

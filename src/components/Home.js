@@ -62,6 +62,9 @@ const Home = () => {
           <p>Chargement des produits en vedette...</p>
         )}
       </div>
+      <Link to="/featured_products">
+            <button className="cta-button">Découvrir les livres en vedette</button>
+          </Link>
       </section>
 
       {/* Testimonials section */}

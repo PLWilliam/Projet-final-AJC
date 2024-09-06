@@ -91,9 +91,24 @@
     border-radius: 5px;
     margin-top: 10px;
   }
+
+  .del-to-cart {
+    padding: 10px;
+    background-color: #af3535;
+    border: none;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
   
   .add-to-cart:hover {
     background-color: #218838;
+  }
+
+  .del-to-cart:hover {
+    background-color: #922525;
   }
   
   /* Testimonials section */

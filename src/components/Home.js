@@ -5,6 +5,7 @@ import Header from './Header';
 import Accordion from './Accordion';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
+import ProductCard from './ProductCard';
 
 
 const Home = () => {
@@ -46,17 +47,7 @@ const Home = () => {
         <div className="featured-products">
           {featuredProducts.length > 0 ? (
             featuredProducts.map((product) => (
-            <div key={product.id} className="featured-product">
-              {product.best_seller && <span className="best-seller-badge">Meilleur vendeur</span>}
-              <Link to={`/products/${product.id}`}>
-                <img src={product.poster} alt={product.name} className="product-image" />
-                <h3>{product.name}</h3>
-              </Link>
-              <p>{product.overview}</p>
-              <p>Price: {product.price} €</p>
-              <p>Rating: {product.rating} / 5</p>
-              <button className="add-to-cart">Ajouter au panier +</button>
-            </div>
+              <ProductCard key={product.id} value={product}/>
           ))
         ) : (
           <p>Chargement des produits en vedette...</p>

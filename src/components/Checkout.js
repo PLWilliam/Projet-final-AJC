@@ -23,8 +23,9 @@ const Checkout = () => {
     if (cart.length == 1) {
       setTotalPrice(cart[0].price)
     }
-    else if (cart.length > 2){
-      setTotalPrice(cart.reduce((accumulator, calc)=> accumulator.price + calc.price))
+    else if (cart.length > 1){
+      
+      setTotalPrice(cart.reduce((accumulator, calc)=> accumulator + calc.price, 0))
     }
     else{
       navigate('/');
@@ -38,7 +39,7 @@ const Checkout = () => {
     try {
       const refDocs = await addDoc(collection(db, "orders"), {mail,cart});
       sessionStorage.setItem('commandID',refDocs.id)
-      
+      localStorage.removeItem('cart')
       resetCart();
     } catch (error) {
       console.log("erreur : "+error);
@@ -82,8 +83,7 @@ const Checkout = () => {
 
         <button type='submit'>Envoyer</button>
       </form>
-      {totalPrice}
-      {/* <button onClick={handleCheckout}>Place Order</button> */}
+      {totalPrice} $
     </div>
   );
 };

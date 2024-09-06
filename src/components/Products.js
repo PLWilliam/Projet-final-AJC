@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
-import firebase from 'firebase/compat/app';
+import ProductCard from './ProductCard';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -35,19 +35,7 @@ const Products = () => {
       />
       <div>
         {filteredProducts.map((product) => (
-          <div key={product.id}>
-            <Link to={`/products/${product.id}`}>
-              <h3>{product.name}</h3>
-            </Link>
-            <img src={product.poster} alt={product.name} />
-            <p>{product.overview}</p>
-            <p>Price: {product.price} €</p>
-            {product.rating ? (
-              <p>Rating: {product.rating} / 5</p>
-            ) : (
-              <p>No rating available</p>
-            )}
-          </div>
+          <ProductCard key={product.id} value={product} />
         ))}
       </div>
     </div>

@@ -8,8 +8,9 @@ import { Link } from 'react-router-dom';
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
+  const [cartLength, setCartLength] = useState(false);
   const navigate = useNavigate();
-  const { cart } = useContext(CartContext);
+  const { cart,refreshCart } = useContext(CartContext);
   const dropDownRef = useRef(null);
 
   useEffect(() => {
@@ -18,7 +19,16 @@ const Header = () => {
     if (!token) {
       // navigate('/login');
     }
-  }, [navigate]);
+
+    setCartLength(cart.length)
+    
+    if (localStorage.getItem('cart')) {
+      refreshCart(JSON.parse(localStorage.getItem('cart')))
+    }
+    
+
+
+  }, [cart.length]);
 
   useEffect(() => {
     // Fonction pour gérer les clics en dehors du menu déroulant
@@ -61,6 +71,8 @@ const Header = () => {
   }
 
 
+
+
   return (
     <header className="header">
       <div className="logo">
@@ -77,7 +89,7 @@ const Header = () => {
           <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
         </button>
         <button className="icon-btn" onClick={handleCartClick}>
-          <span className="cart-badge">{cart.length}</span>
+          <span className="cart-badge">{cartLength}</span>
           <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
         </button>
         <button className="icon-btn" onClick={() => dropDown()}>

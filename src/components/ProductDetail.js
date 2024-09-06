@@ -30,9 +30,23 @@ const ProductDetail = () => {
 
   const addCart = ()=>{
     if (product.in_stock) {
-      if(!cart.includes(product)){
-        addToCart(product)
+      if (cart) {
+        if(!cart.includes(product)){
+          addToCart(product)
+          let data;
+          if (localStorage.getItem('cart')) {
+            data = JSON.parse(localStorage.getItem('cart'));
+            data.push(product);
+          }
+          else{
+            data = [product]
+          }
+          localStorage.setItem('cart',JSON.stringify(data))
+        }
       }
+    }
+    else{
+      //message pas en stock
     }
   }
 

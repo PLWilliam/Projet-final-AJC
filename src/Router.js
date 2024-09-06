@@ -10,21 +10,25 @@ import Checkout from './components/Checkout';
 import CheckoutConfirm from './components/CheckoutConfirm';
 import Dashboard from './components/Dashboard';
 import FeaturedProducts  from './components/FeaturedProducts';
-
+import PrivateRoute from './PrivateRoute';
 
 const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
       <Route path="/products" element={<Products />} />
       <Route path="/products/:id" element={<ProductDetail />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/checkout_confirm" element={<CheckoutConfirm />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/register" element={<Register />} />
       <Route path="/featured_products" element={<FeaturedProducts />} />
+
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
+      {/* Routes protégées */}
+      <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
+      <Route path="/checkout" element={<PrivateRoute element={<Checkout />} />} />
+      <Route path="/checkout_confirm" element={<PrivateRoute element={<CheckoutConfirm />} />} />
+      <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
+
      
     </Routes>
   );

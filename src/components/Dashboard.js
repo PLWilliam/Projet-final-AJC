@@ -4,7 +4,7 @@ import { db } from '../firebase';
 
 const Dashboard = () => {
 
-    const [listCommand,setListCommand] = useState(['ggggg']);
+    const [listCommand,setListCommand] = useState([]);
 
     useEffect(()=>{
         const fetchOrders = async ()=>{
@@ -15,7 +15,7 @@ const Dashboard = () => {
             console.log(test);
             
             setListCommand(test)
-            // console.log(listCommand);
+            console.log(listCommand);
             
         }
         fetchOrders()
@@ -27,7 +27,7 @@ const Dashboard = () => {
   return (
     <div>
         {listCommand.length <= 0? 
-        (<div>oui</div>)
+        (<div>Pas de commande effectué</div>)
         :
         (
             <div>

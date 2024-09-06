@@ -14,11 +14,15 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (id) => {
-    setCart(cart.filter((product) => product.id !== id));
+    const updatedCart = cart.filter((product) => product.id !== id);
+    
+    setCart(updatedCart);
+    // localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
   const resetCart = ()=>{
     setCart([]);
+    // localStorage.removeItem('cart');
   }
 
   return (

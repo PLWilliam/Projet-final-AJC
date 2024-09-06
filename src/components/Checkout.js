@@ -39,7 +39,6 @@ const Checkout = () => {
     try {
       const refDocs = await addDoc(collection(db, "orders"), {mail,cart});
       sessionStorage.setItem('commandID',refDocs.id)
-      localStorage.removeItem('cart')
       resetCart();
     } catch (error) {
       console.log("erreur : "+error);
@@ -55,35 +54,40 @@ const Checkout = () => {
         <input
           type='text' 
           value={name}
-          onChange={(e) => setName(e.target.value)}/>
+          onChange={(e) => setName(e.target.value)}
+          disabled/>
 
         <label>Email</label>
         <input
           type='text' 
           value={mail}
-          onChange={(e) => setMail(e.target.value)}/>
+          onChange={(e) => setMail(e.target.value)}
+          disabled/>
 
         <label>Card Number</label>
         <input
           type='text' 
           value={cardNbr}
-          onChange={(e) => setCardNbr(e.target.value)}/>
+          onChange={(e) => setCardNbr(e.target.value)}
+          disabled/>
 
         <label>Date expiration</label>
         <input
           type='text' 
           value={expDate}
-          onChange={(e) => setExpDate(e.target.value)}/>
+          onChange={(e) => setExpDate(e.target.value)}
+          disabled/>
 
         <label>Code de sécurité</label>
         <input
           type='text' 
           value={secureCode}
-          onChange={(e) => setSecureCode(e.target.value)}/>
+          onChange={(e) => setSecureCode(e.target.value)}
+          disabled/>
 
         <button type='submit'>Envoyer</button>
       </form>
-      {totalPrice} $
+      Total : {totalPrice} $
     </div>
   );
 };

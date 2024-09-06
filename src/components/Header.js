@@ -4,6 +4,8 @@ import './Header.css';
 import { CartContext } from './CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom';
+import { getFirestore, collection, query, where, getDocs,addDoc,setDoc,doc,updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -16,19 +18,43 @@ const Header = () => {
   useEffect(() => {
     // Vérifier si un 'token' existe dans le sessionStorage
     const token = sessionStorage.getItem('token');
-    if (!token) {
-      // navigate('/login');
+    const fetchCartFromFirestore = async () => {
+      if (token) {
+        // if (localStorage.getItem('cart')) {
+        //   // refreshCart(JSON.parse(localStorage.getItem('cart')))
+        // }
+        const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
+        if (querySnapshot.docs[0].data().cart) {
+          const cartLength = querySnapshot.docs[0].data().cart.length
+          let test;
+          if(cartLength > 1){
+            test = querySnapshot.docs.map(doc => ([...doc.data().cart]))[0]
+          }
+          else{
+            test = querySnapshot.docs[0].data().cart;
+          }
+          // console.log(test);
+          refreshCart(test)
+          setCartLength(cartLength)
+          
+        }
+        else{
+          setCartLength(0)
+
+        }
+
+        
+      }
+      else{
+        setCartLength(0)
+
+      }
     }
 
-    setCartLength(cart.length)
+    fetchCartFromFirestore()
     
-    if (localStorage.getItem('cart')) {
-      refreshCart(JSON.parse(localStorage.getItem('cart')))
-    }
     
-
-
-  }, [cart.length]);
+  }, [cart,sessionStorage.getItem('token')]);
 
   useEffect(() => {
     // Fonction pour gérer les clics en dehors du menu déroulant
@@ -48,10 +74,6 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showDropDown]);
-
-  const handleSearchToggle = () => {
-    setShowSearch(!showSearch);
-  };
 
   const handleCartClick = () => {
     navigate('/cart');
@@ -76,7 +98,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo">
-        <Link to="/products">
+        <Link to="/">
           <img src={require('../assets/Codebook.png')} alt="Logo" />
           <span>Livre de codes</span>
         </Link>
@@ -84,9 +106,6 @@ const Header = () => {
       <nav className="nav-icons">
         <button className="icon-btn" onClick={() => alert('Settings clicked')}>
           <FontAwesomeIcon icon="fa-solid fa-gear" />
-        </button>
-        <button className="icon-btn" onClick={handleSearchToggle}>
-          <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
         </button>
         <button className="icon-btn" onClick={handleCartClick}>
           <span className="cart-badge">{cartLength}</span>

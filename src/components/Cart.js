@@ -3,7 +3,7 @@ import { CartContext } from './CartContext';
 import { Link } from 'react-router-dom';
 
 const Cart = () => {
-  const { cart, removeFromCart } = useContext(CartContext);
+  const { cart, removeFromCart,resetCart } = useContext(CartContext);
   
 
   return (
@@ -22,6 +22,7 @@ const Cart = () => {
       )}
       {cart.length > 0 && (
         <Link to="/checkout">
+          <button onClick={() => resetCart()}>Vider cart</button>
           <button>Proceed to Checkout</button>
         </Link>
       )}

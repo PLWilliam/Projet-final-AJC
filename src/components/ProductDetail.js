@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { CartContext } from './CartContext';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
+import ButtonAddDel from './ButtonAddDel';
 
 const ProductDetail = () => {
   const { id } = useParams(); 
@@ -28,28 +29,6 @@ const ProductDetail = () => {
 
   }, [id]);
 
-  const addCart = ()=>{
-    if (product.in_stock) {
-      if (cart) {
-        if(!cart.includes(product)){
-          addToCart(product)
-          let data;
-          if (localStorage.getItem('cart')) {
-            data = JSON.parse(localStorage.getItem('cart'));
-            data.push(product);
-          }
-          else{
-            data = [product]
-          }
-          localStorage.setItem('cart',JSON.stringify(data))
-        }
-      }
-    }
-    else{
-      //message pas en stock
-    }
-  }
-
   if (!product) return <div>Loading...</div>;
 
   return (
@@ -62,7 +41,7 @@ const ProductDetail = () => {
       <p>In Stock: {product.in_stock ? 'Yes' : 'No'}</p>
       <p>Size: {product.size} MB</p>
       <p>Best Seller: {product.best_seller ? 'Yes' : 'No'}</p>
-      <button onClick={()=>addCart()}>Add to Cart</button>
+      <ButtonAddDel product={product}/>
     </div>
   );
 };

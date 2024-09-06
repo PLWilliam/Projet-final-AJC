@@ -7,7 +7,8 @@ import { db } from '../firebase';
 
 const CheckoutConfirm = () => {
 
-    const [commandID,setCommandID] = useState('')
+    const [commandID,setCommandID] = useState('');
+    const [error, setError] = useState(null);
 
     const navigate = useNavigate();
 
@@ -24,11 +25,14 @@ const CheckoutConfirm = () => {
 
   return (
     <div>
-        <div>Merci d'avoir commandé</div>
+    <div>Merci d'avoir commandé</div>
+    {error ? (
+        <div style={{ color: 'red' }}>{error}</div>
+    ) : (
         <div>Votre ID de commande : {commandID}</div>
-        <div></div>
-        <button onClick={()=> returnBtn()}>Retour aux site</button>
-    </div>
+    )}
+    <button onClick={returnBtn}>Retour au site</button>
+</div>
   )
 }
 

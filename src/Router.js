@@ -7,6 +7,8 @@ import Products from './components/Products';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import CheckoutConfirm from './components/CheckoutConfirm';
+import Dashboard from './components/Dashboard';
 import FeaturedProducts  from './components/FeaturedProducts';
 
 
@@ -19,6 +21,8 @@ const Router = () => {
       <Route path="/products/:id" element={<ProductDetail />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/checkout_confirm" element={<CheckoutConfirm />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/register" element={<Register />} />
       <Route path="/featured_products" element={<FeaturedProducts />} />
      

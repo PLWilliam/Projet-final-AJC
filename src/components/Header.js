@@ -117,7 +117,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/dasboard" onClick={handleLinkClick}>
+                <Link to="/dashboard" onClick={handleLinkClick}>
                   <button>Dashboard</button>
                 </Link>
               </li>

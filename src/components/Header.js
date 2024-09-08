@@ -23,7 +23,11 @@ const Header = () => {
         // if (localStorage.getItem('cart')) {
         //   // refreshCart(JSON.parse(localStorage.getItem('cart')))
         // }
-        // const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
+        const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
+       
+        console.log(querySnapshot);
+        
+       
         // if (querySnapshot.docs[0].data().cart) {
         //   const cartLength = querySnapshot.docs[0].data().cart.length
         //   let test;
@@ -42,6 +46,8 @@ const Header = () => {
         //   setCartLength(0)
 
         // }
+
+        console.log(token)
 
         
       }

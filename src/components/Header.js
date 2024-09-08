@@ -23,25 +23,25 @@ const Header = () => {
         // if (localStorage.getItem('cart')) {
         //   // refreshCart(JSON.parse(localStorage.getItem('cart')))
         // }
-        const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
-        if (querySnapshot.docs[0].data().cart) {
-          const cartLength = querySnapshot.docs[0].data().cart.length
-          let test;
-          if(cartLength > 1){
-            test = querySnapshot.docs.map(doc => ([...doc.data().cart]))[0]
-          }
-          else{
-            test = querySnapshot.docs[0].data().cart;
-          }
-          // console.log(test);
-          refreshCart(test)
-          setCartLength(cartLength)
+        // const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
+        // if (querySnapshot.docs[0].data().cart) {
+        //   const cartLength = querySnapshot.docs[0].data().cart.length
+        //   let test;
+        //   if(cartLength > 1){
+        //     test = querySnapshot.docs.map(doc => ([...doc.data().cart]))[0]
+        //   }
+        //   else{
+        //     test = querySnapshot.docs[0].data().cart;
+        //   }
+        //   // console.log(test);
+        //   refreshCart(test)
+        //   setCartLength(cartLength)
           
-        }
-        else{
-          setCartLength(0)
+        // }
+        // else{
+        //   setCartLength(0)
 
-        }
+        // }
 
         
       }

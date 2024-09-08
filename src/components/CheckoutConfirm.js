@@ -1,7 +1,8 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useContext} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, query, where, getDocs,addDoc,doc,updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { CartContext } from './CartContext';
 
 
 
@@ -9,16 +10,16 @@ const CheckoutConfirm = () => {
 
     const [commandID,setCommandID] = useState('');
     const [error, setError] = useState(null);
+    const { cart,resetCart } = useContext(CartContext);
 
     const navigate = useNavigate();
     const user = sessionStorage.getItem('token')
     
     useEffect(() => {
-        console.log('Component mounted');
-        // Retirer la logique de nettoyage pour le test
-        return () => {
-            console.log('Component unmounted');
-        };
+        setCommandID(sessionStorage.getItem('commandID'))
+        resetCart();
+        console.log(cart);
+        
     }, []);
     
 
@@ -40,14 +41,14 @@ const CheckoutConfirm = () => {
 
   return (
     <div>
-    <div>Merci d'avoir commandé</div>
-    {error ? (
-        <div style={{ color: 'red' }}>{error}</div>
-    ) : (
-        <div>Votre ID de commande : {commandID}</div>
-    )}
-    <button onClick={returnBtn}>Retour au site</button>
-</div>
+        <div>Merci d'avoir commandé</div>
+        {error ? (
+            <div style={{ color: 'red' }}>{error}</div>
+        ) : (
+            <div>Votre ID de commande : {commandID}</div>
+        )}
+        <button onClick={returnBtn}>Retour au site</button>
+    </div>
   )
 }
 

@@ -9,12 +9,20 @@ const Dashboard = () => {
     useEffect(()=>{
         const fetchOrders = async ()=>{
             const querySnapshot = await getDocs(query(collection(db, 'orders'),where('mail', '==', sessionStorage.getItem('token'))));
-            console.log(querySnapshot.docs);
+            console.log(querySnapshot.docs[0].data());
 
-            const test = querySnapshot.docs.map(doc => ([...doc.data().cart]))
-            console.log(test);
+            const orders = querySnapshot.docs.map((doc) => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    ...data,
+                    createdAt: data.createdAt ? new Date(data.createdAt.seconds * 1000 + data.createdAt.nanoseconds / 1000000) : null
+                };
+            });
+
+            const sortedOrders  = orders.sort((a, b) => a.createdAt - b.createdAt);
             
-            setListCommand(test)
+            setListCommand(sortedOrders)
             console.log(listCommand);
             
         }
@@ -31,10 +39,12 @@ const Dashboard = () => {
         :
         (
             <div>
+                {/* {listCommand.} */}
                 {listCommand.map((commands,index)=>(
-                <div key={index}>
+                <div key={commands.id}>
                     <div>Command n° : {index+1}</div>
-                    {commands.map((command,index2)=>(
+                    <div>Réalisé le {commands.createdAt.toLocaleString()}</div>
+                    {commands.cart.map((command,index2)=>(
                     <div key={command.id}>
                         <div>Acticle n° : {index2+1}</div>
                         <div>{command.name}</div>

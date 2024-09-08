@@ -87,15 +87,22 @@ const ButtonAddDel = ({ product }) => {
 
     return (
         <div>
-            {currentProduct && cart.some(item => item.id === currentProduct.id) ? (
-                <button className="del-to-cart" onClick={removeCart}>
-                    Supprimer du panier -
-                </button>
+            {currentProduct && currentProduct.in_stock ? (
+                cart.some(item => item.id === currentProduct.id) ? (
+                    <button className="del-to-cart" onClick={removeCart}>
+                        Supprimer du panier -
+                    </button>
+                ) : (
+                    <button className="add-to-cart" onClick={addCart}>
+                        Ajouter au panier +
+                    </button>
+                )
             ) : (
-                <button className="add-to-cart" onClick={addCart}>
-                    Ajouter au panier +
-                </button>
+                <div className="not-in-stock" onClick={addCart}>
+                    Plus en stock
+                </div>
             )}
+
         </div>
     );
 };

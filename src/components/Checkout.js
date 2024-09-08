@@ -10,14 +10,24 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   const [totalPrice,setTotalPrice] = useState('')
-
-  const [name,setName] = useState('dzadazd')
-  const [mail,setMail] = useState('b@b')
+  
+  const [name,setName] = useState('')
+  const [mail,setMail] = useState('')
   const [cardNbr,setCardNbr] = useState('12756')
   const [expDate,setExpDate] = useState('12/3')
   const [secureCode,setSecureCode] = useState('456')
-
+  
   useEffect(() =>{
+    
+    const fetchUser = async()=>{
+      const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
+      console.log(querySnapshot);
+      
+      setName(querySnapshot.docs[0].data().username)
+      setMail(querySnapshot.docs[0].data().email)
+    }
+    fetchUser()
+
     console.log(cart.length);
 
     if (cart.length == 1) {
@@ -37,7 +47,7 @@ const Checkout = () => {
   const handleCheckout = async(e)=>{
     e.preventDefault();
     try {
-      const refDocs = await addDoc(collection(db, "orders"), {mail,cart});
+      const refDocs = await addDoc(collection(db, "orders"), {mail,cart,createdAt : new Date()});
       sessionStorage.setItem('commandID',refDocs.id)
       resetCart();
     } catch (error) {

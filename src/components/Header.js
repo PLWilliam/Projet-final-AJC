@@ -12,7 +12,7 @@ const Header = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const [cartLength, setCartLength] = useState(false);
   const navigate = useNavigate();
-  const { cart,refreshCart } = useContext(CartContext);
+  const { cart,reloadCart } = useContext(CartContext);
   const dropDownRef = useRef(null);
 
   useEffect(() => {
@@ -21,11 +21,11 @@ const Header = () => {
     const fetchCartFromFirestore = async () => {
       if (token) {
         // if (localStorage.getItem('cart')) {
-        //   // refreshCart(JSON.parse(localStorage.getItem('cart')))
+        //   // reloadCart(JSON.parse(localStorage.getItem('cart')))
         // }
-        const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
+        // const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
        
-        console.log(querySnapshot);
+        // console.log(querySnapshot);
         
        
         // if (querySnapshot.docs[0].data().cart) {
@@ -38,7 +38,7 @@ const Header = () => {
         //     test = querySnapshot.docs[0].data().cart;
         //   }
         //   // console.log(test);
-        //   refreshCart(test)
+        //   reloadCart(test)
         //   setCartLength(cartLength)
           
         // }
@@ -46,6 +46,8 @@ const Header = () => {
         //   setCartLength(0)
 
         // }
+        setCartLength(cart.length);
+        
 
         console.log(token)
 

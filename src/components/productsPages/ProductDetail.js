@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { CartContext } from './CartContext';
+
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../firebase';
-import ButtonAddDel from './ButtonAddDel';
+import { db } from '../../firebase';
+import { ButtonAddDel,CartContext } from '../component.js'
 
 const ProductDetail = () => {
   const { id } = useParams(); 

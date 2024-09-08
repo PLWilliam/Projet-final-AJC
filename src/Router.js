@@ -1,15 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Home from './components/Home';
-import Login from './components/login/Login';
-import Register from './components/login/Register';
-import Products from './components/Products';
-import ProductDetail from './components/ProductDetail';
-import Cart from './components/Cart';
-import Checkout from './components/Checkout';
-import CheckoutConfirm from './components/CheckoutConfirm';
-import Dashboard from './components/Dashboard';
-import FeaturedProducts  from './components/FeaturedProducts';
+import { Home,Login,Register,Products,ProductDetail,Cart,
+  Checkout,CheckoutConfirm,Dashboard,FeaturedProducts } from './components/component'
+
 import PrivateRoute from './PrivateRoute';
 
 const Router = () => {

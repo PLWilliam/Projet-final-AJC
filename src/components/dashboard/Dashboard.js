@@ -1,6 +1,6 @@
 import React, { useState,useContext,useEffect } from 'react';
 import { getFirestore, collection, query, where, getDocs,addDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 
 const Dashboard = () => {
 

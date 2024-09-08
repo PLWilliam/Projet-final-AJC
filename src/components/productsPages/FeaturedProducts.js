@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../firebase';
-import ProductCard from './ProductCard';
+import { db } from '../../firebase';
+import { ProductCard } from '../component.js'
 
 const FeaturedProducts = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
   
     useEffect(() => {
       const fetchProducts = async () => {
@@ -19,18 +20,35 @@ const FeaturedProducts = () => {
           console.error('Error fetching featured products:', error);
         }
       };
+
+
   
       fetchProducts();
     }, []);
+
+    const handleSearch = (e) => {
+      setSearchQuery(e.target.value);
+    };
+
+    
+    const filteredProducts = featuredProducts.filter(product => 
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   
     return (
       <div>
         <h1>Featured Books</h1>
-        {featuredProducts.length === 0 ? (
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearch}
+          placeholder="Search for eBooks"
+        />
+        {filteredProducts.length === 0 ? (
           <p>No featured products available.</p>
         ) : (
           <ul>
-            {featuredProducts.map(product => (
+            {filteredProducts.map(product => (
               <ProductCard key={product.id} value={product} />
             ))}
           </ul>

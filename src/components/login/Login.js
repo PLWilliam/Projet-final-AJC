@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import bcrypt from 'bcryptjs';
-import { CartContext } from '../CartContext';
+import { CartContext } from '../component.js'
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -52,16 +52,16 @@ const Login = () => {
 
       if (querySnapshot.docs[0].data().cart) {
         const cartLength = querySnapshot.docs[0].data().cart.length
-        let test;
+        let userCart;
         if(cartLength > 1){
-          test = querySnapshot.docs.map(doc => ([...doc.data().cart]))[0]
+          userCart = querySnapshot.docs.map(doc => ([...doc.data().cart]))[0]
         }
         else{
-          test = querySnapshot.docs[0].data().cart;
+          userCart = querySnapshot.docs[0].data().cart;
         }
         // console.log(test);
-        reloadCart(test)
-        
+        reloadCart(userCart)
+        navigate('/');
       }
       else{
         resetCart();

@@ -1,11 +1,11 @@
 import React, { useEffect ,useState,useContext,useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
-import { CartContext } from './CartContext';
+import { CartContext } from '../component.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom';
 import { getFirestore, collection, query, where, getDocs,addDoc,setDoc,doc,updateDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -14,48 +14,17 @@ const Header = () => {
   const navigate = useNavigate();
   const { cart,reloadCart } = useContext(CartContext);
   const dropDownRef = useRef(null);
+  const user = sessionStorage.getItem('token');
 
   useEffect(() => {
     // Vérifier si un 'token' existe dans le sessionStorage
     const token = sessionStorage.getItem('token');
     const fetchCartFromFirestore = async () => {
       if (token) {
-        // if (localStorage.getItem('cart')) {
-        //   // reloadCart(JSON.parse(localStorage.getItem('cart')))
-        // }
-        // const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
-       
-        // console.log(querySnapshot);
-        
-       
-        // if (querySnapshot.docs[0].data().cart) {
-        //   const cartLength = querySnapshot.docs[0].data().cart.length
-        //   let test;
-        //   if(cartLength > 1){
-        //     test = querySnapshot.docs.map(doc => ([...doc.data().cart]))[0]
-        //   }
-        //   else{
-        //     test = querySnapshot.docs[0].data().cart;
-        //   }
-        //   // console.log(test);
-        //   reloadCart(test)
-        //   setCartLength(cartLength)
-          
-        // }
-        // else{
-        //   setCartLength(0)
-
-        // }
         setCartLength(cart.length);
-        
-
-        console.log(token)
-
-        
       }
       else{
         setCartLength(0)
-
       }
     }
 
@@ -107,7 +76,7 @@ const Header = () => {
     <header className="header">
       <div className="logo">
         <Link to="/">
-          <img src={require('../assets/Codebook.png')} alt="Logo" />
+          <img src={require('../../assets/Codebook.png')} alt="Logo" />
           <span>Livre de codes</span>
         </Link>
       </div>
@@ -115,10 +84,11 @@ const Header = () => {
         <button className="icon-btn" onClick={() => alert('Settings clicked')}>
           <FontAwesomeIcon icon="fa-solid fa-gear" />
         </button>
-        <button className="icon-btn" onClick={handleCartClick}>
+        {user ? (<button className="icon-btn" onClick={handleCartClick}>
           <span className="cart-badge">{cartLength}</span>
           <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
-        </button>
+        </button>):(<></>)}
+        
         <button className="icon-btn" onClick={() => dropDown()}>
           <FontAwesomeIcon icon="fa-solid fa-user" />
         </button>

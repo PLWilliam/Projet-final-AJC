@@ -1,7 +1,6 @@
 import React, {useContext,useEffect,useState} from 'react'
 import { Link } from 'react-router-dom';
-import { CartContext } from './CartContext';
-import ButtonAddDel from './ButtonAddDel';
+import { ButtonAddDel,CartContext } from '../component.js'
 
 
 const ProductCard = (data) => {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../firebase';
-import ProductCard from './ProductCard';
+import { db } from '../../firebase';
+import { ProductCard } from '../component.js'
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -34,9 +34,15 @@ const Products = () => {
         placeholder="Search for eBooks"
       />
       <div>
-        {filteredProducts.map((product) => (
-          <ProductCard key={product.id} value={product} />
-        ))}
+        {filteredProducts.length === 0 ? (
+          <p>No featured products available.</p>
+        ) : (
+          <ul>
+            {filteredProducts.map(product => (
+              <ProductCard key={product.id} value={product} />
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

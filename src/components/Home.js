@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Home.css';
-import Header from './Header';
-import Accordion from './Accordion';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
-import ProductCard from './ProductCard';
+import { Header,Accordion,ProductCard } from './component.js'
+
+import './Home.css';
 
 
 const Home = () => {
@@ -15,7 +14,11 @@ const Home = () => {
     const fetchProducts = async () => {
       const querySnapshot = await getDocs(query(collection(db, 'featured_products')));
       const featuredProducts = querySnapshot.docs.map(doc => ({...doc.data()}));
-      setFeaturedProducts(featuredProducts);
+
+      const shuffledProducts = featuredProducts.sort(() => Math.random() - 0.5);
+      const limitedProducts = shuffledProducts.slice(0, 3);
+
+      setFeaturedProducts(limitedProducts);
     };
 
     fetchProducts();

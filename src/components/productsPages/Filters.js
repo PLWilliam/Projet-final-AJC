@@ -66,119 +66,111 @@ const Filters = ({ products, onFilteredProductsChange }) => {
         onChange={handleSearch}
         placeholder="Search for eBooks"
       />
-      <div>
+      <div className="filters-column">
         <p>Filtrer par :</p>
-        <div>
-          <label>
-            <input
-              type="radio"
-              name="sort"
-              value=""
-              checked={sortOption === ''}
-              onChange={handleSortChange}
-            />
-            Aucun
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="sort"
-              value="croissant"
-              checked={sortOption === 'croissant'}
-              onChange={handleSortChange}
-            />
-            Prix - Croissant
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="sort"
-              value="decroissant"
-              checked={sortOption === 'decroissant'}
-              onChange={handleSortChange}
-            />
-            Prix - Décroissant
-          </label>
-        </div>
-
-        <div>
-          <p>Note :</p>
-          <label>
-            <input
-              type="radio"
-              name="rating"
-              value="0"
-              checked={ratingFilter === 0}
-              onChange={handleRatingChange}
-            />
-            Toute les notes
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="rating"
-              value="4"
-              checked={ratingFilter === 4}
-              onChange={handleRatingChange}
-            />
-            4 Etoiles et +
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="rating"
-              value="3"
-              checked={ratingFilter === 3}
-              onChange={handleRatingChange}
-            />
-            3 Etoiles et +
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="rating"
-              value="2"
-              checked={ratingFilter === 2}
-              onChange={handleRatingChange}
-            />
-            2 Etoiles et +
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="rating"
-              value="1"
-              checked={ratingFilter === 1}
-              onChange={handleRatingChange}
-            />
-            1 Etoile et +
-          </label>
-        </div>
-
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={bestSellerOnly}
-              onChange={handleBestSellerToggle}
-            />
-            Seulement les meilleurs ventes
-          </label>
-        </div>
-
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={inStockOnly}
-              onChange={handleInStockToggle}
-            />
-            Seulement les eBooks en stock
-          </label>
-        </div>
-
-        <button onClick={resetFilters}>Réinitialiser les filtres</button>
+        <label>
+          <input
+            type="radio"
+            name="sort"
+            value=""
+            checked={sortOption === ''}
+            onChange={handleSortChange}
+          />
+          Aucun
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="sort"
+            value="croissant"
+            checked={sortOption === 'croissant'}
+            onChange={handleSortChange}
+          />
+          Prix - Croissant
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="sort"
+            value="decroissant"
+            checked={sortOption === 'decroissant'}
+            onChange={handleSortChange}
+          />
+          Prix - Décroissant
+        </label>
       </div>
+      <div className="filters-column">
+        <p>Note :</p>
+        <label>
+          <input
+            type="radio"
+            name="rating"
+            value="0"
+            checked={ratingFilter === 0}
+            onChange={handleRatingChange}
+          />
+          Toute les notes
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="rating"
+            value="4"
+            checked={ratingFilter === 4}
+            onChange={handleRatingChange}
+          />
+          4 Etoiles et +
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="rating"
+            value="3"
+            checked={ratingFilter === 3}
+            onChange={handleRatingChange}
+          />
+          3 Etoiles et +
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="rating"
+            value="2"
+            checked={ratingFilter === 2}
+            onChange={handleRatingChange}
+          />
+          2 Etoiles et +
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="rating"
+            value="1"
+            checked={ratingFilter === 1}
+            onChange={handleRatingChange}
+          />
+          1 Etoile et +
+        </label>
+      </div>
+      <div className="filters-column">
+        <label>
+          <input
+            type="checkbox"
+            checked={bestSellerOnly}
+            onChange={handleBestSellerToggle}
+          />
+          Seulement les meilleurs ventes
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={inStockOnly}
+            onChange={handleInStockToggle}
+          />
+          Seulement les eBooks en stock
+        </label>
+      </div>
+      <button onClick={resetFilters}>Réinitialiser les filtres</button>
     </div>
   );
 };

@@ -1,11 +1,10 @@
-/* Conteneur principal pour les détails du produit */
 .product {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background-color: #1f2a48;
-  color: #fff;
+  background-color: #121212; 
+  color: #E0E0E0; 
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   width: 80%;
@@ -14,57 +13,49 @@
   font-family: Arial, sans-serif;
 }
 
-/* Titre du produit */
-h2 {
+.product h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #2563eb;
+  color: #E0E0E0; 
 }
 
-/* Image du produit */
 .product img {
   border-radius: 10px;
   margin-bottom: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  width: 100%; 
+  max-width: 100%; 
+  height: auto; 
 }
 
-/* Description longue du produit */
 .product p {
   font-size: 1.1rem;
   line-height: 1.6;
   margin-bottom: 10px;
-  color: #b5b8c0;
+  color: #B0B0B0; 
 }
 
-/* Prix du produit */
 .product p:nth-of-type(2) {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #38bdf8;
+  color: #0bc9cd; 
 }
 
-/* Évaluation et stock */
 .product p:nth-of-type(3), .product p:nth-of-type(4), .product p:nth-of-type(5) {
   font-weight: bold;
-  color: #9f9e9e;
+  color: #B0B0B0; 
 }
 
-/* Évaluation étoilée */
-.product p:nth-of-type(3) {
-  color: #facc15;
-}
 
-/* Dimension du produit */
 .product p:nth-of-type(5) {
-  color: #818cf8;
+  color: #0bc9cd; 
 }
 
-/* Bouton d'ajout / suppression du panier */
 .button-add-del {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #2563eb;
-  color: white;
+  background-color: #0bc9cd; 
+  color: #121212; 
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -72,5 +63,5 @@ h2 {
 }
 
 .button-add-del:hover {
-  background-color: #3b82f6;
+  background-color: #0a9baf; 
 }

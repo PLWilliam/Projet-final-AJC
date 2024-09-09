@@ -1,7 +1,6 @@
-/* Global styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #121212;
     margin: 0;
     padding: 0;
 }
@@ -12,7 +11,6 @@ body {
     padding: 20px;
 }
 
-/* Search input styling */
 input[type="text"] {
     width: 100%;
     padding: 10px;
@@ -23,14 +21,12 @@ input[type="text"] {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* No products found message */
 p {
     text-align: center;
     color: #888;
     font-size: 18px;
 }
 
-/* Product grid styling */
 ul {
     list-style: none;
     padding: 0;
@@ -39,9 +35,8 @@ ul {
     gap: 20px;
 }
 
-/* Product card styling */
 .card {
-    background-color: white;
+    /* background-color: white; */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -51,6 +46,7 @@ ul {
 
 .card:hover {
     transform: translateY(-10px);
+    box-shadow: #121212;
 }
 
 .card img {
@@ -62,11 +58,11 @@ ul {
 .card h3 {
     font-size: 18px;
     margin: 15px 0;
-    color: #333;
+    color: #E0E0E0 ;
 }
 
 .card p {
-    color: #555;
+    color:  #B0B0B0;
     font-size: 14px;
 }
 

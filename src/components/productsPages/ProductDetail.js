@@ -30,7 +30,7 @@ const ProductDetail = () => {
   if (!product) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className='product'>
       <h2>{product.name}</h2>
       <img src={product.poster} alt={product.name} style={{ width: '200px', height: 'auto' }} />
       <p>{product.long_description}</p>

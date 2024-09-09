@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Header,Accordion,ProductCard } from './component.js'
 
@@ -10,18 +10,15 @@ import './Home.css';
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
 
-
-
   useEffect(() => {
-
 
     // Randomisation des featured_products et limitation à 3 produits affichés
     const fetchProducts = async () => {
-      const querySnapshot = await getDocs(query(collection(db, 'featured_products')));
+      const querySnapshot    = await getDocs(query(collection(db, 'featured_products')));
       const featuredProducts = querySnapshot.docs.map(doc => ({...doc.data()}));
 
       const shuffledProducts = featuredProducts.sort(() => Math.random() - 0.5);
-      const limitedProducts = shuffledProducts.slice(0, 3);
+      const limitedProducts  = shuffledProducts.slice(0, 3);
 
       setFeaturedProducts(limitedProducts);
     };

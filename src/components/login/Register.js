@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
 // hash library
 import bcrypt from 'bcryptjs';
 
 const Register = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail]       = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
+  const [error, setError]       = useState(null);
+  const [success, setSuccess]   = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -18,8 +17,7 @@ const Register = () => {
 
     try {
 
-        const q = query(collection(db, 'users'), where('email', '==', email));
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', email)));
 
         if (!querySnapshot.empty) {
             setError('Cet email est déjà utilisé.');
@@ -27,7 +25,7 @@ const Register = () => {
             return;
         }
 
-        const salt = bcrypt.genSaltSync(10);
+        const salt           = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(password, salt);
 
         await addDoc(collection(db, 'users'), {

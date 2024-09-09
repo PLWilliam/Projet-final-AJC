@@ -24,13 +24,8 @@ const Login = () => {
     const db = getFirestore();
 
     try {
-      // Vérifier si l'email existe dans Firestore
-      const q = query(collection(db, 'users'), where('email', '==', email));
-      const querySnapshot = await getDocs(q);
-      // const querySnapshot2 = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
 
-      console.log(querySnapshot);
-      console.log(querySnapshot.docs[0].data().cart);
+      const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', email)));
       
       if (querySnapshot.empty) {
         setError('Aucun utilisateur trouvé avec cet email.');
@@ -59,7 +54,6 @@ const Login = () => {
         else{
           userCart = querySnapshot.docs[0].data().cart;
         }
-        // console.log(test);
         reloadCart(userCart)
         navigate('/');
       }

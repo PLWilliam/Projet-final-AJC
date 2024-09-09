@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { ProductCard } from '../component.js'
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts]       = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchProducts = async () => {
       const querySnapshot = await getDocs(query(collection(db, 'products')));
-      const productsMap = querySnapshot.docs.map(doc => ({ firebaseID: doc.id,...doc.data()}));
+      const productsMap   = querySnapshot.docs.map(doc => ({ firebaseID: doc.id,...doc.data()}));
       setProducts(productsMap);
     };
     fetchProducts();

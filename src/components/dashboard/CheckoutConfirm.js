@@ -1,30 +1,25 @@
-import React, {useState,useEffect,useContext} from 'react'
+import React, {useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
-import { getFirestore, collection, query, where, getDocs,addDoc,doc,updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
-import { CartContext } from '../component.js'
-
-
 
 const CheckoutConfirm = () => {
 
     const [commandID,setCommandID] = useState('');
-    const [error, setError] = useState(null);
-    const { cart,resetCart } = useContext(CartContext);
+    const [error, setError]        = useState(null);
 
     const navigate = useNavigate();
-    const user = sessionStorage.getItem('token')
     
     useEffect(() => {
-        setCommandID(sessionStorage.getItem('commandID'))
-        // resetCart(user);
+        if (sessionStorage.getItem('commandID')) {
+            setCommandID(sessionStorage.getItem('commandID'))
+        }
+        else{
+            setError("Une erreur est survenu")
+        }
        
     }, []);
     
 
-
-
-    const returnBtn = (user)=>{
+    const returnBtn = ()=>{
         sessionStorage.removeItem('commandID')
         navigate('/')
     }

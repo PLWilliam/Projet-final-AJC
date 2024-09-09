@@ -4,56 +4,54 @@ import './Header.css';
 import { CartContext } from '../component.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 const Header = () => {
   const [showDropDown, setShowDropDown] = useState(false);
-  const [cartLength, setCartLength] = useState(0); // Initialize with 0
-  const navigate = useNavigate();
-  const { cart, reloadCart } = useContext(CartContext); // Assuming `cart` and `reloadCart` from CartContext
-  const dropDownRef = useRef(null);
-  const [userToken, setUserToken] = useState(() => sessionStorage.getItem('token'));
-  // Load token from sessionStorage on load
+  const [cartLength, setCartLength]     = useState(0);
+  const [userToken, setUserToken]       = useState(() => sessionStorage.getItem('token'));
+  const { cart, reloadCart }            = useContext(CartContext);
+  const dropDownRef                     = useRef(null);
+  const navigate                        = useNavigate();
+
 
   useEffect(() => {
-    // Fetch the cart from Firestore when the component mounts or the token changes
     const fetchCartFromFirestore = async () => {
       if (userToken) {
         try {
-          // Fetch the user's cart from Firestore based on their email (stored in token)
           const q = query(collection(db, 'users'), where('email', '==', userToken));
           const querySnapshot = await getDocs(q);
           console.log(userToken);
           
           if (querySnapshot.docs.length > 0 && querySnapshot.docs[0].data().cart) {
             const userCart = querySnapshot.docs[0].data().cart;
-            reloadCart(userCart); // Update the cart in the context
-            setCartLength(userCart.length); // Update the cart length for the header
+            reloadCart(userCart);
+            setCartLength(userCart.length);
           }
         } catch (error) {
           console.error("Erreur lors de la récupération du panier:", error);
         }
       } else {
-        setCartLength(0); // Set cartLength to 0 if no token is found
+        setCartLength(0);
       }
     };
   
     fetchCartFromFirestore();
-  }, [userToken, setCartLength]); // `userToken` should not be updated in this hook
+  }, [userToken, setCartLength]);
 
+  // Mettre à jour la longueur du panier lorsque le panier change dans le contexte
   useEffect(() => {
-    // Update the cart length when the cart changes in the context
     setCartLength(cart.length);
   }, [cart]);
 
+  // Mettre à jour le token utilisateur lorsque sessionStorage change
   useEffect(() => {
-    // Update the cart length when the cart changes in the context
     setUserToken(sessionStorage.getItem('token'));
   }, [sessionStorage.getItem('token')]);
 
+  // Gérer les clics en dehors du menu déroulant pour le fermer
   useEffect(() => {
-    // Handle outside clicks to close the dropdown menu
     const handleClickOutside = (event) => {
       if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
         setShowDropDown(false);
@@ -79,7 +77,7 @@ const Header = () => {
 
   const handleLogout = () => {
     sessionStorage.removeItem('token');
-    setUserToken(null); // Clear the token from state
+    setUserToken(null);
     navigate('/login');
   };
 
@@ -97,7 +95,7 @@ const Header = () => {
       </div>
       <nav className="nav-icons">
         {userToken}
-        <button className="icon-btn" onClick={() => alert('Settings clicked')}>
+        <button className="icon-btn" onClick={() => alert('Paramètres cliqués')}>
           <FontAwesomeIcon icon="fa-solid fa-gear" />
         </button>
 

@@ -7,12 +7,7 @@ const ProductCard = (data) => {
 
     useEffect(()=>{
         setProduct(data.value)
-        
     },[])
-
-    
-
-
 
     
   return (

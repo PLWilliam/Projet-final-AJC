@@ -7,16 +7,15 @@ import { db } from '../../firebase';
 
 const Checkout = () => {
   const { cart,resetCart } = useContext(CartContext);
-  const navigate = useNavigate();
-
+  
+  const [name,setName]             = useState('')
+  const [mail,setMail]             = useState('')
+  const [cardNbr,setCardNbr]       = useState('12756')
+  const [expDate,setExpDate]       = useState('12/3')
+  const [secureCode,setSecureCode] = useState('456')
   const [totalPrice,setTotalPrice] = useState('')
   
-  const [name,setName] = useState('')
-  const [mail,setMail] = useState('')
-  const [cardNbr,setCardNbr] = useState('12756')
-  const [expDate,setExpDate] = useState('12/3')
-  const [secureCode,setSecureCode] = useState('456')
-
+  const navigate = useNavigate();
   const user = sessionStorage.getItem('token')
   
   useEffect(() =>{

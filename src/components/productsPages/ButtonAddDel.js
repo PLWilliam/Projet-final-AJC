@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../component.js'
-import { getFirestore, collection, query, where, getDocs, addDoc, setDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase'; // Importer Firebase Firestore
 
 const ButtonAddDel = ({ product }) => {
@@ -24,15 +24,11 @@ const ButtonAddDel = ({ product }) => {
                     console.log(querySnapshot.docs[0].id);
 
                     // Ajouter le produit au panier localement
-                    const updatedCart = [...cart, currentProduct];  // Crée une copie du panier avec le produit ajouté
-                    
-                    await addToCart(currentProduct);  // Met à jour le panier dans le contexte (asynchrone)
-
-                    console.log("Panier mis à jour :", updatedCart); // Utilise updatedCart qui contient le produit ajouté
+                    const updatedCart = [...cart, currentProduct];
+                    await addToCart(currentProduct);
 
                     // Vérifie que le panier n'est pas vide
                     if (updatedCart && updatedCart.length > 0) {
-                        // Met à jour le champ `cart` dans le document utilisateur
                         await updateDoc(doc(db, 'users', querySnapshot.docs[0].id), { cart: updatedCart });
                         console.log("Panier mis à jour dans Firestore.");
                     } else {
@@ -54,12 +50,9 @@ const ButtonAddDel = ({ product }) => {
         if (currentProduct && user) {
             try {
                 const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
-                const userId = querySnapshot.docs[0].id;
+                const userId        = querySnapshot.docs[0].id;
+                const updatedCart   = cart.filter(item => item.id !== currentProduct.id);
 
-                // Filtre les articles pour enlever celui correspondant
-                const updatedCart = cart.filter(item => item.id !== currentProduct.id);
-
-                // Met à jour le panier dans le contexte (supprime l'article)
                 removeFromCart(currentProduct.id);
 
                 console.log("Panier après suppression :", updatedCart);

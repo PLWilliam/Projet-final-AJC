@@ -1,5 +1,5 @@
-import React, { useState,useContext,useEffect } from 'react';
-import { getFirestore, collection, query, where, getDocs,addDoc } from 'firebase/firestore';
+import React, { useState,useEffect } from 'react';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 const Dashboard = () => {
@@ -9,27 +9,20 @@ const Dashboard = () => {
     useEffect(()=>{
         const fetchOrders = async ()=>{
             const querySnapshot = await getDocs(query(collection(db, 'orders'),where('mail', '==', sessionStorage.getItem('token'))));
-
             const orders = querySnapshot.docs.map((doc) => {
                 const data = doc.data();
                 return {
                     id: doc.id,
                     ...data,
-                    createdAt: data.createdAt ? new Date(data.createdAt.seconds * 1000 + data.createdAt.nanoseconds / 1000000) : null
+                    createdAt: data.createdAt ? new Date(data.createdAt.seconds * 1000 + data.createdAt.nanoseconds / 1000000) : null // converti date en format compréhensible
                 };
             });
 
             const sortedOrders  = orders.sort((a, b) => a.createdAt - b.createdAt);
-            
             setListCommand(sortedOrders)
-            console.log(listCommand);
-            
         }
         fetchOrders()
-
     },[])
-
-    // if (!listCommand) return <div>Loading...</div>;
 
   return (
     <div>

@@ -4,6 +4,7 @@ import { CartContext } from '../component.js'
 
 const Cart = () => {
   const { cart, removeFromCart,resetCart } = useContext(CartContext);
+  
   const token = sessionStorage.getItem('token');
 
   return (

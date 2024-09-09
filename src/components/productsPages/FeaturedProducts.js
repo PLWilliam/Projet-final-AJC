@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { ProductCard } from '../component.js'
 
 const FeaturedProducts = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery]           = useState('');
   
     useEffect(() => {
-      const fetchProducts = async () => {
+      const fetchFeaturedProducts = async () => {
         try {
           const querySnapshot = await getDocs(query(collection(db, 'featured_products')));
           const products = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -18,10 +17,8 @@ const FeaturedProducts = () => {
           console.error('Error fetching featured products:', error);
         }
       };
-
-
   
-      fetchProducts();
+      fetchFeaturedProducts();
     }, []);
 
     const handleSearch = (e) => {

@@ -228,3 +228,14 @@ footer {
     margin-top: 40px;
     color: #B0B0B0; 
 }
+
+
+@media (max-width: 768px) {
+  .hero{
+    flex-direction: column-reverse;
+  }
+
+  .hero p{
+    margin-right: 0;
+  }
+}

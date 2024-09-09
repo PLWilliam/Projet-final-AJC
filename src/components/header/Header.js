@@ -94,21 +94,20 @@ const Header = () => {
         </Link>
       </div>
       <nav className="nav-icons">
-        {userToken}
-        <button className="icon-btn" onClick={() => alert('Paramètres cliqués')}>
-          <FontAwesomeIcon icon="fa-solid fa-gear" />
-        </button>
+        <div>
+          {userToken}
 
-        {userToken && (
-          <button className="icon-btn" onClick={handleCartClick}>
-            <span className="cart-badge">{cartLength}</span>
-            <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
+          {userToken && (
+            <button className="icon-btn" onClick={handleCartClick}>
+              <span className="cart-badge">{cartLength}</span>
+              <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
+            </button>
+          )}
+
+          <button className="icon-btn" onClick={() => dropDown()}>
+            <FontAwesomeIcon icon="fa-solid fa-user" />
           </button>
-        )}
-
-        <button className="icon-btn" onClick={() => dropDown()}>
-          <FontAwesomeIcon icon="fa-solid fa-user" />
-        </button>
+        </div>
         {showDropDown && (
           <div className='dropDown' ref={dropDownRef}>
             {!userToken ? (
@@ -134,7 +133,6 @@ const Header = () => {
             ) : (
               <div>
                 <ul>
-                  <li>{userToken}</li>
                   <li>
                     <Link to="/products" onClick={handleLinkClick}>
                       <button>Tout les eBooks</button>

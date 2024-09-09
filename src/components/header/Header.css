@@ -67,7 +67,7 @@
     border-radius: 4px;
   }
 
-  .dropDown{
+  /* .dropDown{
     position: absolute;
     background-color: grey;
     right:10px;
@@ -97,8 +97,63 @@
 
   .dropDown button:hover{
     background-color: darkgray;
+  } */
+  
+
+  .dropDown {
+    background-color: #1e1e1e;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    width: 200px;
+    position: absolute;
+    z-index: 10;
+    top: calc(5vh + 10px);
+    right:10px;
+}
+
+.dropDown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
   }
   
+  .dropDown li {
+    margin-bottom: 10px;
+    width: 80%;
+  }
+  
+  .dropDown li:last-child {
+    margin-bottom: 0;
+}
+
+.dropDown a {
+    text-decoration: none;
+}
+
+.dropDown button {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #0bc9cd;
+    border: none;
+    color: #E0E0E0;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropDown button:hover {
+    background-color: lighten(#0bc9cd, 10%);
+}
+
+.logout-btn {
+    background-color: #d9534f; /* Optional for different logout button color */
+}
+
+.dropDown li span {
+    color: #B0B0B0;
+}
 
   @media (max-width: 768px) {
     .header {
@@ -113,6 +168,8 @@
   
     .nav-icons {
       margin-top: 10px;
+      display: flex;
+      flex-direction: column;
     }
   
     .search-bar {
@@ -124,11 +181,8 @@
     }
   
     .dropDown {
-      right: 10px;
-      top: auto;
-      bottom: 10px;
-      position: static;
-      width: 100%;
+      position:unset;
+      width: 100vw;
     }
   
     .dropDown ul {

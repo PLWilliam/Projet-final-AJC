@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../component.js'
 import { useNavigate } from 'react-router-dom';
 import './Cart.css'
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const Cart = () => {
   const { cart, removeFromCart,resetCart } = useContext(CartContext);
@@ -29,6 +31,22 @@ const Cart = () => {
     navigate('/products/'+id);
   }
 
+    
+  const resetCartBtn = ()=>{
+    confirmAlert({
+      message: "Êtes-vous sûr de vouloir vider votre panier ?",
+      buttons: [
+        {
+          label: "Oui",
+          onClick: () => resetCart(token)
+        },
+        {
+          label: "Annuler",
+        }
+      ]
+    });
+  }
+
 
   return (
     <div>
@@ -51,7 +69,7 @@ const Cart = () => {
           {cart.length > 0 && (
             <div className="cart-actions">
               <div>Total : ${totalPrice}</div>
-              <button onClick={() => resetCart(token)}>Vider panier</button>
+              <button onClick={() => resetCartBtn()}>Vider panier</button>
               <Link to="/checkout" className="checkout-link">
                 <button>Payer</button>
               </Link>

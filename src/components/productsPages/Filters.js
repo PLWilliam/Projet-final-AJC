@@ -7,7 +7,7 @@ const Filters = ({ products, onFilteredProductsChange }) => {
   const [ratingFilter, setRatingFilter] = useState(0);
   const [bestSellerOnly, setBestSellerOnly] = useState(false);
   const [inStockOnly, setInStockOnly] = useState(false);
-  const [isFilterOpen, setIsFilterOpen] = useState(false); // Ajoute un état pour ouvrir/fermer le filtre
+  const [isFilterOpen, setIsFilterOpen] = useState(false); 
 
   useEffect(() => {
     const applyFilters = () => {
@@ -59,19 +59,18 @@ const Filters = ({ products, onFilteredProductsChange }) => {
     setInStockOnly(false);
   };
 
-  // Fonction pour gérer l'affichage/fermeture du filtre
   const toggleFilters = () => {
     setIsFilterOpen(prev => !prev);
   };
 
   return (
     <div>
-      {/* Bouton burger pour ouvrir/fermer le filtre */}
+     
       <button className="filters-toggle" onClick={toggleFilters}>
         {isFilterOpen ? 'Fermer le filtre' : 'Ouvrir le filtre'}
       </button>
 
-      {/* Conteneur des filtres */}
+      
       <div className={`filters-container ${isFilterOpen ? 'open' : ''}`}>
         <input
           type="text"

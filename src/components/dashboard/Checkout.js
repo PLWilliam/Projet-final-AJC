@@ -3,7 +3,7 @@ import { CartContext } from '../component.js'
 import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs,addDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-
+import './Checkout.css'
 
 const Checkout = () => {
   const { cart,resetCart } = useContext(CartContext);
@@ -16,7 +16,7 @@ const Checkout = () => {
   const [totalPrice,setTotalPrice] = useState('')
   
   const navigate = useNavigate();
-  const user = sessionStorage.getItem('token')
+  const user     = sessionStorage.getItem('token')
   
   useEffect(() =>{
     
@@ -56,47 +56,47 @@ const Checkout = () => {
   }
 
   return (
-    <div>
+    <div className="checkout-container">
       <h2>Checkout</h2>
       <form onSubmit={handleCheckout}>
-        <label>Name</label>
+        <label>Nom : </label>
         <input
           type='text' 
           value={name}
           onChange={(e) => setName(e.target.value)}
           disabled/>
 
-        <label>Email</label>
+        <label>Mail :</label>
         <input
           type='text' 
           value={mail}
           onChange={(e) => setMail(e.target.value)}
           disabled/>
 
-        <label>Card Number</label>
+        <label>Numéro de carte :</label>
         <input
           type='text' 
           value={cardNbr}
           onChange={(e) => setCardNbr(e.target.value)}
           disabled/>
 
-        <label>Date expiration</label>
+        <label>Date expiration : </label>
         <input
           type='text' 
           value={expDate}
           onChange={(e) => setExpDate(e.target.value)}
           disabled/>
 
-        <label>Code de sécurité</label>
+        <label>Code de sécurité : </label>
         <input
           type='text' 
           value={secureCode}
           onChange={(e) => setSecureCode(e.target.value)}
           disabled/>
 
+          Total : {totalPrice} $
         <button type='submit'>Envoyer</button>
       </form>
-      Total : {totalPrice} $
     </div>
   );
 };

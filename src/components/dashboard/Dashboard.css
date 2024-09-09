@@ -1,0 +1,79 @@
+
+.dashboard {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.no-orders {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #B0B0B0;
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: #1e1e1e;
+}
+
+.orders {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.order-card {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.order-number {
+  font-size: 1.5rem;
+  color: #E0E0E0;
+  margin-bottom: 10px;
+}
+
+.order-date {
+  font-size: 0.9rem;
+  color: #B0B0B0;
+  margin-bottom: 15px;
+}
+
+.order-items {
+  border-top: 1px solid #333;
+  padding-top: 10px;
+}
+
+.item {
+  margin-bottom: 10px;
+}
+
+.item-number {
+  font-weight: bold;
+}
+
+.item-name {
+    margin-left: 1em;
+    color: #B0B0B0;
+    text-decoration: underline;
+}
+
+.item-name:hover{
+    cursor: pointer;
+    color: #E0E0E0
+}
+
+button {
+    background-color: #0bc9cd;
+    border: none;
+    color: #E0E0E0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0bc9cd;
+    opacity: 0.8;
+}

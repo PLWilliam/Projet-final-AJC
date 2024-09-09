@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
+import './CheckoutConfirm.css'
 
 const CheckoutConfirm = () => {
 
@@ -25,7 +26,7 @@ const CheckoutConfirm = () => {
     }
 
   return (
-    <div>
+    <div className='checkout-confirm-container'>
         <div>Merci d'avoir commandé</div>
         {error ? (
             <div style={{ color: 'red' }}>{error}</div>

@@ -1,6 +1,6 @@
 <script setup>
-import { ref,onMounted } from 'vue';
-import { signOut,onAuthStateChanged } from 'firebase/auth';
+import { ref, onMounted } from 'vue';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
 
 import { useRouter } from "vue-router";
@@ -18,10 +18,9 @@ const logout = async () => {
     router.push({ name: 'home' });
 };
 
-const logoClicked = ()=>{
+const logoClicked = () => {
     router.push({ name: 'home' });
 }
-
 
 onMounted(() => {
   onAuthStateChanged(auth, (elem) => {
@@ -32,7 +31,6 @@ onMounted(() => {
     }
   });
 });
-
 </script>
 
 <template>
@@ -41,35 +39,61 @@ onMounted(() => {
             <img src="@/assets/codebook-logo.png" alt="logo codebook">
             <h1>CodeBook</h1>
         </div>
-        <div v-if="user">
+        <div v-if="user" class="user-info">
             Bonjour : {{ user }}
         </div>
-        <button @click="logout">Se Déconnecter</button>
+        <button v-if="user" @click="logout" class="logout-button">Se Déconnecter</button>
     </section>
 </template>
 
-
 <style scoped>
-section{
-    background-color: red;
-    height: 5vh;
+section {
+    background-color: var(--main-bg-color);
+    height: 10vh;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    border-bottom: 2px solid var(--border-color);
+    box-sizing: border-box;
 }
 
-#logo{
-    height: 100%;
+#logo {
     display: flex;
     align-items: center;
+    color: var(--main-text-color);
 }
 
-#logo img{
-    height: 100%;
+#logo img {
+    height: 40px;
+    margin-right: 0.5rem;
 }
 
-#logo :hover{
+#logo h1 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+#logo:hover {
     cursor: pointer;
 }
 
+.user-info {
+    color: var(--main-text-color);
+}
 
+.logout-button {
+    background-color: var(--button-color);
+    color: var(--main-bg-color);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #09b8b8;
+}
 </style>

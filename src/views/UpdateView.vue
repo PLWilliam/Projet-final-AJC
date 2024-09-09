@@ -23,7 +23,7 @@ const updateBook = async()=>{
             await updateDoc(doc(db, 'featured_products', queryDocs.docs.pop().id), form.value);
         }
 
-        router.push({ name: 'read' });
+        router.push({ name: 'ebooks' });
     } catch (error) {
         console.log("erreur :"+ error);
         
@@ -42,20 +42,63 @@ onBeforeMount(async()=>{
 
 <template>
 
-<div class="containerBtn">
-    <RouterLink to="/read" class="centralBtn">Retour</RouterLink>
-</div>
-
-<FormBook :form="form" @emitForm="updateBook"/>
+<section class="main-section">
+        
+    <div class="containerBtn">
+        <RouterLink to="/ebooks" class="centralBtn">Retour</RouterLink>
+    </div>
+    
+    <FormBook :form="form" @emitForm="addDB"/>
+    
+</section>
     
     
 </template>
 
 <style scoped>
-
-.form{
+.main-section {
+    background-color: var(--main-bg-color);
+    color: var(--main-text-color);
+    padding: 1rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.reset-button {
+    background-color: var(--button-color);
+    color: var(--main-bg-color);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.reset-button:hover {
+    background-color: #09b8b8;
+}
+
+.containerBtn {
+    margin-bottom: 1rem;
+}
+
+.centralBtn {
+    background-color: var(--button-color);
+    color: var(--main-bg-color);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.centralBtn:hover {
+    background-color: #09b8b8;
 }
 
 </style>

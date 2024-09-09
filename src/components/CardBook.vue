@@ -1,177 +1,145 @@
 <script setup>
-import { collection, query, where, getDocs ,deleteDoc , doc , addDoc} from 'firebase/firestore';
+import { collection, query, where, getDocs, deleteDoc, doc, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const props   = defineProps(['product','index'])
-const emit    = defineEmits(['deleteBook'])
-const product = props.product
+const props = defineProps(['product', 'index']);
+const emit = defineEmits(['deleteBook']);
+const product = props.product;
 
-//Delete from db chosen book
-const deleteBook = async(id,firebaseID)=>{
-
-    const text = "Etes vous sure de vouloir supprimer ce livre ?";
-    if (confirm(text)==true) {
-        console.log(firebaseID);
+// Delete from db chosen book
+const deleteBook = async (id, firebaseID) => {
+    const text = "Êtes-vous sûr de vouloir supprimer ce livre ?";
+    if (confirm(text)) {
         try {
             const q = query(collection(db, 'featured_products'), where('id', '==', id));
-            const queryDocs = await getDocs(q)  
+            const queryDocs = await getDocs(q);
 
             if (queryDocs.docs.length > 0) {
                 const docID = queryDocs.docs[0].id;
-                await deleteDoc(doc(db, "featured_products", docID))
+                await deleteDoc(doc(db, "featured_products", docID));
             }
 
-            await deleteDoc(doc(db, "products", firebaseID))
-            emit('deleteBook',firebaseID)
+            await deleteDoc(doc(db, "products", firebaseID));
+            emit('deleteBook', firebaseID);
         } catch (error) {
-            console.log(error);
-        }  
+            console.error(error);
+        }
     }
-}
+};
 
-//Add or delete book from featured_products if it's in or not
-const updateFeatured = async(id)=>{  
-
+// Add or delete book from featured_products if it's in or not
+const updateFeatured = async (id) => {
     try {
-        const copyProduct = { ...product }
+        const copyProduct = { ...product };
         if (!product.featured_products) {
             delete copyProduct.firebaseID;
             delete copyProduct.featured_products;
-            await addDoc(collection(db, "featured_products"),copyProduct);
-        }
-        else{
-            const q         = query(collection(db, 'featured_products'), where('id', '==', id));
-            const queryDocs = await getDocs(q)
-            const docs      = queryDocs.docs.pop()
+            await addDoc(collection(db, "featured_products"), copyProduct);
+        } else {
+            const q = query(collection(db, 'featured_products'), where('id', '==', id));
+            const queryDocs = await getDocs(q);
+            const docs = queryDocs.docs.pop();
             await deleteDoc(doc(db, "featured_products", docs.id));
         }
-        product.featured_products = !product.featured_products
+        product.featured_products = !product.featured_products;
     } catch (error) {
-        console.log("erreur : "+error);
+        console.error("Erreur : " + error);
     }
-}
-
+};
 </script>
 
 <template>
     <div class="card">
-        <div class="cardText">
-            <img :src="product.poster" :alt="'image : '+product.name">
-            <div class="cardInfo">
-                <h3>{{ product.name }}</h3>
-                <span>{{ product.overview }}</span>
-                <span>Note : {{ product.rating }} / 5</span>
-                <span>Best seller : {{ product.best_seller ? 'Oui' : 'Non' }}</span>
-                <span>En stock : {{ product.in_stock ? 'Oui' : 'Non' }}</span>
-                <span>Taille : {{ product.size }} MB</span>
-                <span>Prix : {{ product.price }} $</span>
-            </div>
+        <img :src="product.poster" :alt="'Image de ' + product.name" class="card-image">
+        <div class="card-info">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.overview }}</p>
+            <p>Note : {{ product.rating }} / 5</p>
+            <p>Best seller : {{ product.best_seller ? 'Oui' : 'Non' }}</p>
+            <p>En stock : {{ product.in_stock ? 'Oui' : 'Non' }}</p>
+            <p>Taille : {{ product.size }} MB</p>
+            <p>Prix : {{ product.price }} $</p>
         </div>
-        <div class="cardBtn">
-            <div class="splitBtn">
-                <RouterLink :to="{
-                        name : 'update',
-                        params: {
-                            id: product.id
-                        }
-                    }"
-                    class="btn"
-                    aria-label="Envoie sur la page de modification de ce livre"
-                >
-                    <font-awesome-icon :icon="['fas', 'pen-to-square']" class="icon"/> 
-                </RouterLink>
-            </div>
-            <div class="splitBtn">
-                <button @click="deleteBook(product.id,product.firebaseID)" class="btn" aria-label="Suppression du livre">
-                    <font-awesome-icon icon="fa-solid fa-trash" class="icon"/>
-                </button>
-            </div>
-            <div class="splitBtn">
-                <button @click="updateFeatured(product.id)" class="btn" :aria-label="product.featured_products ? 'Retire le livre de la liste vedette' : 'Ajout du livre dans la liste vedette' ">
-                    <div v-if="product.featured_products" class="btn" style="border: none;">
-                        <font-awesome-icon icon="fa-solid fa-star" class="icon"/>
-                    </div>
-                    <div v-else class="btn" style="border: none;">
-                        <font-awesome-icon icon="fa-regular fa-star" class="icon"/>
-                    </div>
-                </button>
-            </div>
+        <div class="card-buttons">
+            <RouterLink :to="{ name: 'update', params: { id: product.id } }" class="btn" aria-label="Modifier ce livre">
+                <font-awesome-icon :icon="['fas', 'pen-to-square']" />
+            </RouterLink>
+            <button @click="deleteBook(product.id, product.firebaseID)" class="btn" aria-label="Supprimer ce livre">
+                <font-awesome-icon icon="fa-solid fa-trash" />
+            </button>
+            <button @click="updateFeatured(product.id)" class="btn" :aria-label="product.featured_products ? 'Retirer de la liste vedette' : 'Ajouter à la liste vedette'">
+                <font-awesome-icon :icon="product.featured_products ? 'fa-solid fa-star' : 'fa-regular fa-star'" />
+            </button>
         </div>
     </div>
 </template>
 
 <style scoped>
-
-.card{
-    background-color: aquamarine;
-    border-radius: 25px;
-    width: 100%;
-}
-
-.cardText{
-    width: 100%;
-    height: 85%;
-}
-
-.cardText img{
-    border-radius: 25px 25px 0 0;
-    width: 100%;
-    height: 40%;
-}
-
-.cardInfo{
-    height: 60%;
-    padding: 0 1em;
+.card {
     display: flex;
     flex-direction: column;
+    background-color: var(--secondary-bg-color);
+    border-radius: 12px; 
+    overflow: hidden;
+    color: var(--secondary-text-color);
+    margin: 1rem;
+    border: 1px solid var(--border-color);
+    height: 100%;
 }
 
-span{
-    margin: 0.1em 0;
+.card h3{
+    color: var(--main-text-color);
 }
 
-.cardBtn{
-    border-top: 1px solid black;
-    box-sizing: border-box;
+.card-image {
     width: 100%;
-    height: 15%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    height: auto;
+    border-bottom: 2px solid var(--border-color); 
 }
 
-.splitBtn{
-    height: 5em;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.card-info {
+    flex: 1;
+    padding: 1rem;
 }
 
-.btn{
+.card-info h3 {
+    margin: 0 0 0.5rem 0;
+}
+
+.card-info p {
+    margin: 0.5rem 0;
+}
+
+.card-buttons {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    border-top: 2px solid var(--border-color);
+    background-color: var(--main-bg-color); 
+}
+
+.btn {
+    background-color: var(--button-color); 
+    border: none;
+    border-radius: 6px;
+    color: var(--main-bg-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: greenyellow;
     height: 36px;
     width: 36px;
-    border: 2px black solid;
-    padding: 0;
-    box-sizing:content-box;
-    text-decoration: none;
-    color: black;
-}
-
-.btn:hover{
     cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
 }
 
-svg{
-    width: 80%;
-    height: 80%;
-
+.btn:hover {
+    background-color: #09b8b8;
 }
 
+.font-awesome-icon {
+    width: 20px;
+    height: 20px;
+}
 
 </style>

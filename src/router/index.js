@@ -10,8 +10,8 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue')
     },
     {
-      path: '/read',
-      name: 'read',
+      path: '/ebooks',
+      name: 'ebooks',
       component: () => import('../views/ReadView.vue'),
       meta: { requiresAuth: true }
     },

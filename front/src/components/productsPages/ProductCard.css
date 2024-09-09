@@ -1,0 +1,38 @@
+.featured-product {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+    color: #E0E0E0; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+
+.featured-product h3 {
+    color: #B0B0B0; 
+    margin: 10px 0; 
+    text-decoration: none; 
+}
+
+.featured-product a {
+    text-decoration: none; 
+    color: inherit; 
+}
+
+.featured-product a:hover {
+    color: #0bc9cd; 
+}
+
+
+.product-image {
+    width: 100%;
+    border-radius: 8px;
+}
+
+
+.button-container {
+    margin-top: auto; 
+}

@@ -1,0 +1,28 @@
+:root{
+    font-size: 16px;
+    --main-bg-color: #121212;
+    --secondary-bg-color: #1e1e1e;
+    --main-text-color: #E0E0E0;
+    --secondary-text-color: #B0B0B0;
+    --button-color: #0bc9cd;
+    --border-color: #333;
+}
+
+body{
+    margin: 0;
+}
+
+.containerBtn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .centralBtn{
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 0.5em 1em;
+    margin: 1em;
+  }

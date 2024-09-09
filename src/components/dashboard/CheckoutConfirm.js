@@ -17,24 +17,14 @@ const CheckoutConfirm = () => {
     
     useEffect(() => {
         setCommandID(sessionStorage.getItem('commandID'))
-        resetCart();
-        console.log(cart);
-        
+        // resetCart(user);
+       
     }, []);
     
 
-    const clearUserCart = async()=>{
-        try {
-            const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
-            // const userRef = doc(db, 'users', user); // Utiliser userId comme ID utilisateur
-            await updateDoc(doc(db, 'users', querySnapshot.docs[0].id), { cart: [] });
-            console.log('Panier vidé avec succès.');
-        } catch (error) {
-            setError('Une erreur est survenue lors du vidage de panier.');
-        }
-    }
 
-    const returnBtn = ()=>{
+
+    const returnBtn = (user)=>{
         sessionStorage.removeItem('commandID')
         navigate('/')
     }

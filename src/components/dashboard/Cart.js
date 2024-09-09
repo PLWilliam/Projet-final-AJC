@@ -4,7 +4,7 @@ import { CartContext } from '../component.js'
 
 const Cart = () => {
   const { cart, removeFromCart,resetCart } = useContext(CartContext);
-  
+  const token = sessionStorage.getItem('token');
 
   return (
     <div>
@@ -22,7 +22,7 @@ const Cart = () => {
       )}
       {cart.length > 0 && (
         <Link to="/checkout">
-          <button onClick={() => resetCart()}>Vider cart</button>
+          <button onClick={() => resetCart(token)}>Vider cart</button>
           <button>Proceed to Checkout</button>
         </Link>
       )}

@@ -6,8 +6,6 @@ import { ProductCard } from '../component.js'
 
 const FeaturedProducts = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
   
     useEffect(() => {
@@ -30,7 +28,7 @@ const FeaturedProducts = () => {
       setSearchQuery(e.target.value);
     };
 
-    
+    //Filtre bar de recherche
     const filteredProducts = featuredProducts.filter(product => 
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );

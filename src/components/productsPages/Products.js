@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { ProductCard } from '../component.js'
@@ -21,6 +20,7 @@ const Products = () => {
     setSearchQuery(e.target.value);
   };
 
+  //Filtre bar de recherche
   const filteredProducts = products.filter(product => 
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );

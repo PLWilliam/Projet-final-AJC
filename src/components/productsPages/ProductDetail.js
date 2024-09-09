@@ -1,19 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { ButtonAddDel,CartContext } from '../component.js'
+import { ButtonAddDel } from '../component.js'
 
 const ProductDetail = () => {
   const { id } = useParams(); 
   const [product, setProduct] = useState(null);
-  const { cart,addToCart } = useContext(CartContext);
 
   useEffect(() => {
 
       const fetchProduct = async () => {
-        console.log(id);
         
         try {
           const querySnapshot = await getDocs(query(collection(db, 'products'),where('id','==',Number(id))));

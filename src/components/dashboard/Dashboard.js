@@ -9,7 +9,6 @@ const Dashboard = () => {
     useEffect(()=>{
         const fetchOrders = async ()=>{
             const querySnapshot = await getDocs(query(collection(db, 'orders'),where('mail', '==', sessionStorage.getItem('token'))));
-            console.log(querySnapshot.docs[0].data());
 
             const orders = querySnapshot.docs.map((doc) => {
                 const data = doc.data();

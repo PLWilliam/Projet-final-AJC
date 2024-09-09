@@ -1,12 +1,12 @@
 import React, { useState,useContext,useEffect } from 'react';
 import { CartContext } from '../component.js'
 import { useNavigate } from 'react-router-dom';
-import { getFirestore, collection, query, where, getDocs,addDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs,addDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 
 const Checkout = () => {
-  const { cart, setCart,resetCart } = useContext(CartContext);
+  const { cart,resetCart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const [totalPrice,setTotalPrice] = useState('')
@@ -16,19 +16,19 @@ const Checkout = () => {
   const [cardNbr,setCardNbr] = useState('12756')
   const [expDate,setExpDate] = useState('12/3')
   const [secureCode,setSecureCode] = useState('456')
+
+  const user = sessionStorage.getItem('token')
   
   useEffect(() =>{
     
     const fetchUser = async()=>{
       const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', sessionStorage.getItem('token'))));
-      console.log(querySnapshot);
       
       setName(querySnapshot.docs[0].data().username)
       setMail(querySnapshot.docs[0].data().email)
     }
     fetchUser()
 
-    console.log(cart.length);
 
     if (cart.length == 1) {
       setTotalPrice(cart[0].price)
@@ -49,7 +49,7 @@ const Checkout = () => {
     try {
       const refDocs = await addDoc(collection(db, "orders"), {mail,cart,createdAt : new Date()});
       sessionStorage.setItem('commandID',refDocs.id)
-      resetCart();
+      resetCart(user);
     } catch (error) {
       console.log("erreur : "+error);
     }

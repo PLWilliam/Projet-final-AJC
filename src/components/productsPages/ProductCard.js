@@ -1,23 +1,12 @@
-import React, {useContext,useEffect,useState} from 'react'
+import React, {useEffect,useState} from 'react'
 import { Link } from 'react-router-dom';
-import { ButtonAddDel,CartContext } from '../component.js'
-
+import { ButtonAddDel } from '../component.js'
 
 const ProductCard = (data) => {
-    const { cart,addToCart } = useContext(CartContext);
     const [product,setProduct] = useState('')
 
     useEffect(()=>{
         setProduct(data.value)
-        // console.log(cart);
-        // console.log(product);
-        
-        // if (cart.some(item => item.id === product.id))  {
-        //     // console.log('yes');
-        // }
-        // else{
-        //     // console.log('no');
-        // }
         
     },[])
 

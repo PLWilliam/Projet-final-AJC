@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { CartProvider } from './components/productsPages/CartContext';
 import AppRouter from './Router';
+import { CartProvider } from './components/dashboard/CartContext';
+import { Header } from './components/component'
 import './style.css';
-import Header from './components/header/Header';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'

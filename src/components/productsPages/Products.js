@@ -28,7 +28,7 @@ const Products = () => {
   );
 
   return (
-    <div>
+    <div className='card'>
       <input
         type="text"
         value={searchQuery}

@@ -2,6 +2,7 @@ import React, {useEffect,useState} from 'react'
 import { Link } from 'react-router-dom';
 import { ButtonAddDel } from '../component.js'
 
+
 const ProductCard = (data) => {
     const [product,setProduct] = useState('')
 

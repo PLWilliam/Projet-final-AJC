@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import bcrypt from 'bcryptjs';
-import { CartContext } from '../component.js'
+import { CartContext } from '../component.js';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');

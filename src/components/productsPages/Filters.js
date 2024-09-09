@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Filters.css';
 
 const Filters = ({ products, onFilteredProductsChange }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -58,7 +59,7 @@ const Filters = ({ products, onFilteredProductsChange }) => {
   };
 
   return (
-    <div>
+    <div className="filters-container">
       <input
         type="text"
         value={searchQuery}

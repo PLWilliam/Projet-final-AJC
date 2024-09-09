@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../component.js'
 import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase'; // Importer Firebase Firestore
+import './ButtonAddDel.css';
+
 
 const ButtonAddDel = ({ product }) => {
     const { cart, addToCart, removeFromCart } = useContext(CartContext);

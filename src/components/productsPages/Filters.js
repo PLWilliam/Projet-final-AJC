@@ -7,6 +7,7 @@ const Filters = ({ products, onFilteredProductsChange }) => {
   const [ratingFilter, setRatingFilter] = useState(0);
   const [bestSellerOnly, setBestSellerOnly] = useState(false);
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false); 
 
   useEffect(() => {
     const applyFilters = () => {
@@ -58,119 +59,131 @@ const Filters = ({ products, onFilteredProductsChange }) => {
     setInStockOnly(false);
   };
 
+  const toggleFilters = () => {
+    setIsFilterOpen(prev => !prev);
+  };
+
   return (
-    <div className="filters-container">
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={handleSearch}
-        placeholder="Search for eBooks"
-      />
-      <div className="filters-column">
-        <p>Filtrer par :</p>
-        <label>
-          <input
-            type="radio"
-            name="sort"
-            value=""
-            checked={sortOption === ''}
-            onChange={handleSortChange}
-          />
-          Aucun
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="sort"
-            value="croissant"
-            checked={sortOption === 'croissant'}
-            onChange={handleSortChange}
-          />
-          Prix - Croissant
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="sort"
-            value="decroissant"
-            checked={sortOption === 'decroissant'}
-            onChange={handleSortChange}
-          />
-          Prix - Décroissant
-        </label>
+    <div>
+     
+      <button className="filters-toggle" onClick={toggleFilters}>
+        {isFilterOpen ? 'Fermer le filtre' : 'Ouvrir le filtre'}
+      </button>
+
+      
+      <div className={`filters-container ${isFilterOpen ? 'open' : ''}`}>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearch}
+          placeholder="Search for eBooks"
+        />
+        <div className="filters-column">
+          <p>Filtrer par :</p>
+          <label>
+            <input
+              type="radio"
+              name="sort"
+              value=""
+              checked={sortOption === ''}
+              onChange={handleSortChange}
+            />
+            Aucun
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="sort"
+              value="croissant"
+              checked={sortOption === 'croissant'}
+              onChange={handleSortChange}
+            />
+            Prix - Croissant
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="sort"
+              value="decroissant"
+              checked={sortOption === 'decroissant'}
+              onChange={handleSortChange}
+            />
+            Prix - Décroissant
+          </label>
+        </div>
+        <div className="filters-column">
+          <p>Note :</p>
+          <label>
+            <input
+              type="radio"
+              name="rating"
+              value="0"
+              checked={ratingFilter === 0}
+              onChange={handleRatingChange}
+            />
+            Toute les notes
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="rating"
+              value="4"
+              checked={ratingFilter === 4}
+              onChange={handleRatingChange}
+            />
+            4 Etoiles et +
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="rating"
+              value="3"
+              checked={ratingFilter === 3}
+              onChange={handleRatingChange}
+            />
+            3 Etoiles et +
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="rating"
+              value="2"
+              checked={ratingFilter === 2}
+              onChange={handleRatingChange}
+            />
+            2 Etoiles et +
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="rating"
+              value="1"
+              checked={ratingFilter === 1}
+              onChange={handleRatingChange}
+            />
+            1 Etoile et +
+          </label>
+        </div>
+        <div className="filters-column">
+          <label>
+            <input
+              type="checkbox"
+              checked={bestSellerOnly}
+              onChange={handleBestSellerToggle}
+            />
+            Seulement les meilleurs ventes
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={inStockOnly}
+              onChange={handleInStockToggle}
+            />
+            Seulement les eBooks en stock
+          </label>
+        </div>
+        <button onClick={resetFilters}>Réinitialiser les filtres</button>
       </div>
-      <div className="filters-column">
-        <p>Note :</p>
-        <label>
-          <input
-            type="radio"
-            name="rating"
-            value="0"
-            checked={ratingFilter === 0}
-            onChange={handleRatingChange}
-          />
-          Toute les notes
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="rating"
-            value="4"
-            checked={ratingFilter === 4}
-            onChange={handleRatingChange}
-          />
-          4 Etoiles et +
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="rating"
-            value="3"
-            checked={ratingFilter === 3}
-            onChange={handleRatingChange}
-          />
-          3 Etoiles et +
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="rating"
-            value="2"
-            checked={ratingFilter === 2}
-            onChange={handleRatingChange}
-          />
-          2 Etoiles et +
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="rating"
-            value="1"
-            checked={ratingFilter === 1}
-            onChange={handleRatingChange}
-          />
-          1 Etoile et +
-        </label>
-      </div>
-      <div className="filters-column">
-        <label>
-          <input
-            type="checkbox"
-            checked={bestSellerOnly}
-            onChange={handleBestSellerToggle}
-          />
-          Seulement les meilleurs ventes
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={inStockOnly}
-            onChange={handleInStockToggle}
-          />
-          Seulement les eBooks en stock
-        </label>
-      </div>
-      <button onClick={resetFilters}>Réinitialiser les filtres</button>
     </div>
   );
 };

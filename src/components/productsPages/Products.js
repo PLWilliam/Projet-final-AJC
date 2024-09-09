@@ -1,51 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { ProductCard } from '../component.js'
+import { ProductCard } from '../component.js';
+import Filters from './Filters';
 import './Products.css';
 
-
 const Products = () => {
-  const [products, setProducts]       = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const querySnapshot = await getDocs(query(collection(db, 'products')));
-      const productsMap   = querySnapshot.docs.map(doc => ({ firebaseID: doc.id,...doc.data()}));
+      const productsMap = querySnapshot.docs.map(doc => ({ firebaseID: doc.id, ...doc.data() }));
       setProducts(productsMap);
+      setFilteredProducts(productsMap);
     };
     fetchProducts();
   }, []);
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  //Filtre bar de recherche
-  const filteredProducts = products.filter(product => 
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   return (
     <div>
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={handleSearch}
-        placeholder="Search for eBooks"
+      <Filters 
+        products={products}
+        onFilteredProductsChange={setFilteredProducts}
       />
-      <div>
-        {filteredProducts.length === 0 ? (
-          <p>No featured products available.</p>
-        ) : (
-          <ul>
-            {filteredProducts.map(product => (
-              <ProductCard key={product.id} value={product} />
-            ))}
-          </ul>
-        )}
-      </div>
+      
+      {/* Product list */}
+      {filteredProducts.length === 0 ? (
+        <p>No products available.</p>
+      ) : (
+        <ul>
+          {filteredProducts.map(product => (
+            <ProductCard key={product.firebaseID} value={product} />
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

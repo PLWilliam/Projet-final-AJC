@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { ProductCard } from '../component.js'
+import './Products.css';
+
 
 const Products = () => {
   const [products, setProducts]       = useState([]);

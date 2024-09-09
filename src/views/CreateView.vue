@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
-import { useRoute,useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { collection, getDocs, deleteDoc, doc, addDoc  } from 'firebase/firestore';
 import { db } from '../firebase';
 import dbjson from '@/assets/db.js'

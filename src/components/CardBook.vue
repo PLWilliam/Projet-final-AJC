@@ -2,19 +2,18 @@
 import { collection, query, where, getDocs ,deleteDoc , doc , addDoc} from 'firebase/firestore';
 import { db } from '../firebase';
 
-const props = defineProps(['product','index'])
-
-const emit = defineEmits(['deleteBook'])
+const props   = defineProps(['product','index'])
+const emit    = defineEmits(['deleteBook'])
 const product = props.product
 
 //Delete from db chosen book
 const deleteBook = async(id,firebaseID)=>{
 
     const text = "Etes vous sure de vouloir supprimer ce livre ?";
-    // if (confirm(text)==true) {
+    if (confirm(text)==true) {
         console.log(firebaseID);
         try {
-            const q = await query(collection(db, 'featured_products'), where('id', '==', id));
+            const q = query(collection(db, 'featured_products'), where('id', '==', id));
             const queryDocs = await getDocs(q)  
 
             if (queryDocs.docs.length > 0) {
@@ -27,7 +26,7 @@ const deleteBook = async(id,firebaseID)=>{
         } catch (error) {
             console.log(error);
         }  
-    // }
+    }
 }
 
 //Add or delete book from featured_products if it's in or not

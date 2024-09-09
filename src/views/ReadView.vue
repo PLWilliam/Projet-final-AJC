@@ -1,7 +1,7 @@
 <script setup>
-import { ref, onMounted ,watch } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
-import { collection, query, where, getDocs ,deleteDoc , doc , addDoc} from 'firebase/firestore';
+import { ref, onMounted } from 'vue';
+import { RouterLink } from 'vue-router'
+import { collection, getDocs} from 'firebase/firestore';
 import { db } from '../firebase';
 
 import CardBook from '@/components/CardBook.vue';
@@ -11,12 +11,8 @@ const products = ref([]);
 
 //Delete locally
 const deleteBook = async(id)=>{
-  console.log(id);
-  
   let index = products.value.findIndex((e)=> e.firebaseID == id)
   products.value.splice(index, 1);
-
-
 }
 
 const sortProducts = ()=>{
@@ -29,7 +25,6 @@ const sortProducts = ()=>{
     }
   })
 }
-
 
 
 onMounted(async () => {

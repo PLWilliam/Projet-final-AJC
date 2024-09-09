@@ -2,17 +2,17 @@
 import { ref } from 'vue';
 import { signInWithEmailAndPassword,signOut,onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
-import { useRoute,useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const email = ref("tgp.william@gmail.com");
-const password = ref("MiGii@9jtERHz7NF");
+const email    = ref("");
+const password = ref("");
 
 const login = async () => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
-    console.log('Utilisateur connecté :', userCredential.user);
+    // console.log('Utilisateur connecté :', userCredential.user);
     router.push({ name: 'read' });
   } catch (error) {
     console.error('Erreur de connexion:', error.message);

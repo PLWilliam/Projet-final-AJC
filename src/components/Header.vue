@@ -1,18 +1,12 @@
 <script setup>
-import { ref,watch,onMounted } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
-import { signInWithEmailAndPassword,signOut,onAuthStateChanged } from 'firebase/auth';
+import { ref,onMounted } from 'vue';
+import { signOut,onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
 
-import { useRoute,useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 const router = useRouter();
 
 const user = ref('')
-
-// console.log(auth);
-
-
-
 
 const logout = async () => {
     try {
@@ -21,14 +15,18 @@ const logout = async () => {
     } catch (error) {
         console.error("Erreur lors de la déconnexion :", error);
     }
-router.push({ name: 'home' });
+    router.push({ name: 'home' });
 };
+
+const logoClicked = ()=>{
+    router.push({ name: 'home' });
+}
 
 
 onMounted(() => {
   onAuthStateChanged(auth, (elem) => {
     if (elem) {
-      user.value = elem.email.split('@')[0];
+        user.value = elem.email.split('@')[0];
     } else {
         user.value = null;
     }
@@ -39,16 +37,9 @@ onMounted(() => {
 
 <template>
     <section>
-        <div id="logo">
+        <div id="logo" @click="logoClicked">
             <img src="@/assets/codebook-logo.png" alt="logo codebook">
             <h1>CodeBook</h1>
-        </div>
-        <div v-if="user">
-            <nav>
-                <RouterLink to="/">Home </RouterLink>
-                <RouterLink to="/read">read </RouterLink>
-                <RouterLink to="/create">create </RouterLink>
-            </nav>
         </div>
         <div v-if="user">
             Bonjour : {{ user }}
@@ -56,6 +47,7 @@ onMounted(() => {
         <button @click="logout">Se Déconnecter</button>
     </section>
 </template>
+
 
 <style scoped>
 section{
@@ -73,6 +65,10 @@ section{
 
 #logo img{
     height: 100%;
+}
+
+#logo :hover{
+    cursor: pointer;
 }
 
 

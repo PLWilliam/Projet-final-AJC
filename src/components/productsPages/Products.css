@@ -1,4 +1,4 @@
-/* Couleurs */
+
 :root {
   --background-color: #121212;
   --button-color: #0bc9cd;
@@ -37,7 +37,7 @@ ul {
 
 
 
-/* Responsivité - Une seule carte par ligne pour petits écrans */
+/* Responsivité */
 @media (max-width: 768px) {
   ul {
     justify-content: center;

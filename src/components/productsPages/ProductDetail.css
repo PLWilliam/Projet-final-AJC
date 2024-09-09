@@ -26,6 +26,9 @@ h2 {
   border-radius: 10px;
   margin-bottom: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 600px;
+  height: auto;
 }
 
 /* Description longue du produit */
@@ -49,10 +52,6 @@ h2 {
   color: #9f9e9e;
 }
 
-/* Évaluation étoilée */
-.product p:nth-of-type(3) {
-  color: #facc15;
-}
 
 /* Dimension du produit */
 .product p:nth-of-type(5) {

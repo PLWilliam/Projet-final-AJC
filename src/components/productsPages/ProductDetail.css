@@ -1,69 +1,76 @@
-
-
-.product-detail {
-  margin: 20px auto; 
-  max-width: 1200px; 
-  font-family: Arial, sans-serif;
-  text-align: center;
-   
-}
-
-.product-poster {
-  max-width: 600px;
-  width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.product-details {
+/* Conteneur principal pour les détails du produit */
+.product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #1f2a48;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 80%;
   max-width: 800px;
-  text-align: left; 
+  margin: 40px auto;
+  font-family: Arial, sans-serif;
 }
 
-.product-price {
-  font-size: 24px;
-  color: #333;
-  margin: 10px 0;
+/* Titre du produit */
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2563eb;
 }
 
-.product-rating {
-  display: flex;
-  align-items: center;
-  justify-content: center; 
-  color: #ffc107;
+/* Image du produit */
+.product img {
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.product-rating-number {
-  margin-left: 10px;
-  color: #333;
+/* Description longue du produit */
+.product p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  color: #b5b8c0;
 }
 
-.product-stock {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.stock-status {
-  background-color: #d4edda;
-  color: #155724;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.stock-quantity {
-  font-size: 16px;
+/* Prix du produit */
+.product p:nth-of-type(2) {
+  font-size: 1.5rem;
   font-weight: bold;
+  color: #38bdf8;
 }
 
-.product-long_description {
+/* Évaluation et stock */
+.product p:nth-of-type(3), .product p:nth-of-type(4), .product p:nth-of-type(5) {
+  font-weight: bold;
+  color: #9f9e9e;
+}
+
+/* Évaluation étoilée */
+.product p:nth-of-type(3) {
+  color: #facc15;
+}
+
+/* Dimension du produit */
+.product p:nth-of-type(5) {
+  color: #818cf8;
+}
+
+/* Bouton d'ajout / suppression du panier */
+.button-add-del {
   margin-top: 20px;
-  line-height: 1.5;
-  color: #555;
+  padding: 10px 20px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
-.button-add-cart {
-  margin-top: 15px;
+.button-add-del:hover {
+  background-color: #3b82f6;
 }

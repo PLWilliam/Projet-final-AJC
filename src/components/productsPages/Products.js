@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { ProductCard } from '../component.js'
+import './Products.css';
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);

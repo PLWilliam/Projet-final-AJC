@@ -1,0 +1,21 @@
+services:
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"  # Port 3000 pour le projet React
+    networks:
+      - webnet
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"  # Port 8080 pour le projet Vue.js
+    networks:
+      - webnet
+
+networks:
+  webnet:

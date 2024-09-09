@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background-color: #121212; 
+  background-color: #1e1e1e; 
   color: #E0E0E0; 
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -23,8 +23,6 @@
   border-radius: 10px;
   margin-bottom: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  width: 100%; 
-  max-width: 100%; 
   height: auto; 
 }
 
@@ -64,4 +62,8 @@
 
 .button-add-del:hover {
   background-color: #0a9baf; 
+}
+
+.container-details{
+  text-align: center;
 }

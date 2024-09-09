@@ -19,6 +19,7 @@ ul {
   list-style-type: none;
   margin: 0 auto;
   max-width: 1200px; 
+  gap: 10px;
 }
 
 .card {

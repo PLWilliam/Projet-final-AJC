@@ -19,8 +19,8 @@ const ProductCard = ({ value }) => {
                 <h3>{product.name}</h3>
             </Link>
             <p>{product.overview}</p>
-            <p>Price: {product.price} €</p>
-            <p>Rating: {product.rating} / 5</p>
+            <p>Prix: {product.price} €</p>
+            <p>Note: {product.rating} / 5</p>
             <div className="button-container">
                 <ButtonAddDel product={product} />
             </div>

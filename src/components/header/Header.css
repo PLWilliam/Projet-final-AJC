@@ -99,3 +99,39 @@
     background-color: darkgray;
   }
   
+
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      height: auto;
+      padding: 10px;
+    }
+  
+    .logo {
+      margin-bottom: 10px;
+    }
+  
+    .nav-icons {
+      margin-top: 10px;
+    }
+  
+    .search-bar {
+      top: auto;
+      right: auto;
+      left: 10px;
+      position: static;
+      margin-top: 10px;
+    }
+  
+    .dropDown {
+      right: 10px;
+      top: auto;
+      bottom: 10px;
+      position: static;
+      width: 100%;
+    }
+  
+    .dropDown ul {
+      width: 100%;
+    }
+  }

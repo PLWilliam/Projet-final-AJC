@@ -8,7 +8,7 @@ import './ButtonAddDel.css';
 const ButtonAddDel = ({ product }) => {
     const { cart, addToCart, removeFromCart } = useContext(CartContext);
     const [currentProduct, setCurrentProduct] = useState(null);
-    const user = sessionStorage.getItem('token');
+    const user     = sessionStorage.getItem('token');
 
     // Mettez à jour le produit actuel avec celui reçu dans les props
     useEffect(() => {

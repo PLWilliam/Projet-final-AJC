@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { ProductCard } from '../component.js'
@@ -7,9 +7,8 @@ import Filters from './Filters';
 
 const FeaturedProducts = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [filteredProducts, setFilteredProducts] = useState([]);
+    const navigate = useNavigate();
   
     useEffect(() => {
       const fetchProducts = async () => {
@@ -24,10 +23,15 @@ const FeaturedProducts = () => {
       fetchProducts();
     }, []);
 
+    const returnBtn =()=>{
+      navigate('/');
+    }
+
   
     return (
-      <div>
-        <h1>Featured Books</h1>
+      <div className='featured-container'>
+        <button onClick={returnBtn}>Retour</button>
+        <h1>Livre en vedette</h1>
         <Filters 
           products={featuredProducts}
           onFilteredProductsChange={setFilteredProducts}

@@ -49,6 +49,9 @@ const Home = () => {
  
       <section className="featured-section">
         <h2>Livres électroniques en vedette</h2>
+        <Link to="/featured_products">
+            <button className="cta-button">Découvrir les livres en vedette</button>
+          </Link>
         <div className="featured-products">
           {featuredProducts.length > 0 ? (
             featuredProducts.map((product) => (
@@ -58,9 +61,7 @@ const Home = () => {
           <p>Chargement des produits en vedette...</p>
         )}
       </div>
-      <Link to="/featured_products">
-            <button className="cta-button">Découvrir les livres en vedette</button>
-          </Link>
+      
       </section>
 
      

@@ -22,7 +22,7 @@ h3{
   text-decoration: underline;
 }
 
-h3:hover{
+h3:hover:not(.order-number){
   cursor: pointer;
   color: #B0B0B0;
 }

@@ -90,7 +90,7 @@ const Header = () => {
       <div className="logo">
         <Link to="/">
           <img src={require('../../assets/Codebook.png')} alt="Logo" />
-          <span>Livre de codes</span>
+          <span>CodeBook</span>
         </Link>
       </div>
       <nav className="nav-icons">

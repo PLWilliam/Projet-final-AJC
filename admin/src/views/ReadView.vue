@@ -57,6 +57,7 @@ onMounted(async () => {
   <div class="container">
     <div class="containerBtn">
       <RouterLink to="/create" class="centralBtn">Ajouter un eBook</RouterLink>
+      <RouterLink to="/orders" class="centralBtn">Liste commandes</RouterLink>
     </div>
 
     <div v-if="loading" id="containerLoader">

@@ -12,7 +12,7 @@ let isLoaded = true;
 onAuthStateChanged(auth, (user) => {
     if (isLoaded) {
       if (user) {
-        router.push({ name: 'ebooks' });
+        // router.push({ name: 'ebooks' });
       } else {
         router.push({ name: 'home' });
       }

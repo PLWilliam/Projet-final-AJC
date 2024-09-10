@@ -27,6 +27,11 @@ const router = createRouter({
       component: () => import('../views/UpdateView.vue'),
       meta: { requiresAuth: true }
     },
+    {
+      path: '/orders',
+      name: 'orders',
+      component: () => import('../views/OrderView.vue'),
+    },
   ]
 })
 
@@ -38,7 +43,7 @@ router.beforeEach((to, from, next) => {
 
   if (requiresAuth && !isAuthenticated) {
     // if not connect go back home
-    next({ name: 'home' });
+    // next({ name: 'home' });
   } else {
     next();
   }

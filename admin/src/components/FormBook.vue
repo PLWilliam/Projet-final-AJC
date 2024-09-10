@@ -12,15 +12,54 @@ const props = defineProps({
 const form = ref({});
 
 const emitForm = () => {
-  if (isValidForm()) {
+  const validationResult = isValidForm();
+  
+  if (validationResult.isValid) {
     emit('emitForm', form.value);
   } else {
-    alert('Veuillez remplir tous les champs obligatoires.');
+    alert(validationResult.message); // Display a custom alert message
   }
 };
 
+// Function to validate form data types and return a custom error message
 const isValidForm = () => {
-  return form.value.name && form.value.overview && form.value.long_description && form.value.price && form.value.poster && form.value.image_local && form.value.rating && form.value.size;
+  const { name, overview, long_description, price, poster, image_local, rating, size, in_stock, best_seller } = form.value;
+
+  // Check that required fields are filled out
+  if (!name) {
+    return { isValid: false, message: "Le champ 'Nom' est obligatoire." };
+  }
+  if (!overview) {
+    return { isValid: false, message: "Le champ 'Résumé' est obligatoire." };
+  }
+  if (!long_description) {
+    return { isValid: false, message: "Le champ 'Description longue' est obligatoire." };
+  }
+  if (!price || isNaN(parseFloat(price))) {
+    return { isValid: false, message: "Le champ 'Prix' doit être un nombre valide." };
+  }
+  if (!poster) {
+    return { isValid: false, message: "Le champ 'Affiche' est obligatoire." };
+  }
+  if (!image_local) {
+    return { isValid: false, message: "Le champ 'Image locale' est obligatoire." };
+  }
+  if (rating === undefined || isNaN(parseFloat(rating)) || rating < 0 || rating > 5) {
+    return { isValid: false, message: "Le champ 'Note' doit être un nombre entre 0 et 5." };
+  }
+  if (!size) {
+    return { isValid: false, message: "Le champ 'Taille' est obligatoire." };
+  }
+
+  // Checkboxes type validation
+  if (typeof in_stock !== 'boolean') {
+    return { isValid: false, message: "Le champ 'En stock' doit être un booléen." };
+  }
+  if (typeof best_seller !== 'boolean') {
+    return { isValid: false, message: "Le champ 'Meilleure vente' doit être un booléen." };
+  }
+
+  return { isValid: true, message: '' }; // All fields are valid
 };
 
 onMounted(() => {
@@ -31,6 +70,7 @@ watch(() => props.form, (newValue) => {
     form.value = newValue;
 });
 </script>
+
 
 <template>
   <div class="form">

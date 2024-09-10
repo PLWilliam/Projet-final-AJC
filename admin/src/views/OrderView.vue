@@ -4,6 +4,8 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const orders = ref([]);
+const sortKey = ref('');
+const sortOrder = ref('asc');
 
 const fetchOrders = async () => {
   try {
@@ -30,6 +32,24 @@ function calculateTotal(order) {
   return total;
 }
 
+function sortOrders(key) {
+  if (sortKey.value === key) {
+    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortKey.value = key;
+    sortOrder.value = 'asc';
+  }
+
+  orders.value.sort((a, b) => {
+    const valueA = key === 'total' ? calculateTotal(a) : a[key];
+    const valueB = key === 'total' ? calculateTotal(b) : b[key];
+
+    if (valueA < valueB) return sortOrder.value === 'asc' ? -1 : 1;
+    if (valueA > valueB) return sortOrder.value === 'asc' ? 1 : -1;
+    return 0;
+  });
+}
+
 onMounted(() => {
   fetchOrders();
 });
@@ -51,11 +71,11 @@ onMounted(() => {
         <table class="orders-table">
           <thead>
             <tr>
-              <th># Commande</th>
-              <th>Date</th>
-              <th>Client</th>
-              <th>Panier</th>
-              <th>Total</th>
+              <th @click="sortOrders('firebaseID')"># Commande {{ sortKey ==  'firebaseID' ? '('+sortOrder+')' : '' }}</th>
+              <th @click="sortOrders('createdAt')">Date {{ sortKey ==  'createdAt' ? '('+sortOrder+')' : '' }}</th>
+              <th @click="sortOrders('mail')">Client {{ sortKey ==  'mail' ? '('+sortOrder+')' : '' }}</th>
+              <th @click="sortOrders('cart')">Panier {{ sortKey ==  'cart' ? '('+sortOrder+')' : '' }}</th>
+              <th @click="sortOrders('total')">Total {{ sortKey ==  'total' ? '('+sortOrder+')' : '' }}</th>
             </tr>
           </thead>
           <tbody>

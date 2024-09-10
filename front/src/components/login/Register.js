@@ -8,41 +8,48 @@ const Register = () => {
   const [email, setEmail]       = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
   const [error, setError]       = useState(null);
   const [success, setSuccess]   = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
     const db = getFirestore();
+    if (password == password2) {
+      try {
 
-    try {
+          const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', email)));
 
-        const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', email)));
+          if (!querySnapshot.empty) {
+              setError('Cet email est déjà utilisé.');
+              setSuccess(false);
+              return;
+          }
 
-        if (!querySnapshot.empty) {
-            setError('Cet email est déjà utilisé.');
-            setSuccess(false);
-            return;
-        }
+          const salt           = bcrypt.genSaltSync(10);
+          const hashedPassword = bcrypt.hashSync(password, salt);
 
-        const salt           = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(password, salt);
+          await addDoc(collection(db, 'users'), {
+              email: email,
+              username: username,
+              password: hashedPassword,
+          });
 
-        await addDoc(collection(db, 'users'), {
-            email: email,
-            username: username,
-            password: hashedPassword,
-        });
+          setSuccess(true);
+          setError(null); 
+          setEmail('');
+          setUsername('');
+          setPassword('');
+          setPassword2('');
 
-        setSuccess(true);
-        setError(null); 
-        setEmail('');
-        setUsername('');
-        setPassword('');
+      } catch (error) {
+          setError('Erreur lors de l\'enregistrement. Veuillez réessayer.');
+          setSuccess(false);
+      }
 
-    } catch (error) {
-        setError('Erreur lors de l\'enregistrement. Veuillez réessayer.');
-        setSuccess(false);
+    }
+    else{
+      setError('Mot de passe différent');
     }
   };
 
@@ -76,6 +83,16 @@ const Register = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder='mot de passe'
+            required
+          />
+        </div>
+        <div className='label-input'>
+          <label>Confirmer mot de passe</label>
+          <input
+            type="password"
+            value={password2}
+            onChange={(e) => setPassword2(e.target.value)}
             placeholder='mot de passe'
             required
           />
